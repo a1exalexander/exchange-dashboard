@@ -1,12 +1,33 @@
 import React from 'react';
 import SectionHead from '../components/SectionHead';
+import SectionFunding from '../components/SectionFunding';
+import SectionVolume from '../components/SectionVolume';
+import LevelsHead from '../components/LevelsHead';
+import LevelsResistance from '../components/LevelsResistance';
+import LevelsSupport from '../components/LevelsSupport';
+import LevelsCustom from '../components/LevelsCustom';
+import Chart from '../components/Chart';
 
 function App() {
   return (
     <div className="app">
       <div className="app__container">
-        <h1>Dahsboard</h1>
-        <SectionHead/>
+        <h2 className="app__title">BitMEX XBUSD Dashboard</h2>
+        <section className="app__section">
+          <SectionHead />
+          <SectionFunding />
+          <SectionVolume />
+        </section>
+        <h2 className="app__title">S/R Levels</h2>
+        <div className="app__section">
+          <LevelsHead />
+          <LevelsResistance />
+          <LevelsSupport />
+          <LevelsCustom />
+        </div>
+        <div className="app__section">
+          <Chart />
+        </div>
       </div>
     </div>
   );

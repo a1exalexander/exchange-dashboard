@@ -3,19 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.19.0",
     "env-cmd": "^10.0.1",
+    "logplease": "^1.2.15",
     "node-sass": "^4.12.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-redux": "^7.1.1",
     "react-scripts": "3.2.0",
-    "redux": "^4.0.4"
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
+    "socket.io-client": "^2.3.0"
   },
   "scripts": {
     "start": "env-cmd -f ./env/.env.development react-scripts start",
     "dev": "env-cmd -f ./env/.env.development react-scripts start",
-    "dev:fake": "env-cmd -f ./env/.env.devfake react-scripts start",
+    "dev:test": "env-cmd -f ./env/.env.devtest react-scripts start",
     "build": "react-scripts build",
+    "build:test": "env-cmd -f ./env/.env.prodtest react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

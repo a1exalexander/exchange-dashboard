@@ -3,7 +3,7 @@ import React from 'react'
 const SectionHead = () => {
 
   return (
-    <div>section head</div>
+    <div className='section'>section head</div>
   )
 }
 

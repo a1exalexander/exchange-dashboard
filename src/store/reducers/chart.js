@@ -18,25 +18,25 @@ const chartReducer = (state, action) => {
   switch (action.type) {
     case CHART_REQUEST:
       return {
-        ...state.chartState,
+        ...state.chartModule,
         loading: true,
         hasError: false
       };
     case CHART_SUCCESS:
       return {
-        ...state.chartState,
+        ...state.chartModule,
         loading: false,
         hasError: false
       };
     case CHART_FAILURE:
       return {
-        ...state.chartState,
+        ...state.chartModule,
         loading: false,
         hasError: true
       };
     case CHART_UPDATE:
       return {
-        ...state.chartState,
+        ...state.chartModule,
         chart: [...action.payload],
       };
     default:

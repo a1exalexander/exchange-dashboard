@@ -18,29 +18,29 @@ const parametersReducer = (state, action) => {
   switch (action.type) {
     case PARAMETERS_REQUEST:
       return {
-        ...state.parametersState,
+        ...state.parametersModule,
         loading: true,
         hasError: false
       };
     case PARAMETERS_SUCCESS:
       return {
-        ...state.parametersState,
+        ...state.parametersModule,
         loading: false,
         hasError: false
       };
     case PARAMETERS_FAILURE:
       return {
-        ...state.parametersState,
+        ...state.parametersModule,
         loading: false,
         hasError: true
       };
     case PARAMETERS_UPDATE:
       return {
-        ...state.parametersState,
+        ...state.parametersModule,
         parameters: [...action.payload],
       };
     default:
-      return state.parametersState;
+      return state.parametersModule;
   }
 };
 

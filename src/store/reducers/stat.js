@@ -19,29 +19,29 @@ const statReducer = (state, action) => {
   switch (action.type) {
     case STAT_REQUEST:
       return {
-        ...state.statState,
+        ...state.statModule,
         loading: true,
         hasError: false
       };
     case STAT_SUCCESS:
       return {
-        ...state.statState,
+        ...state.statModule,
         loading: false,
         hasError: false
       };
     case STAT_FAILURE:
       return {
-        ...state.statState,
+        ...state.statModule,
         loading: false,
         hasError: true
       };
     case STAT_UPDATE:
       return {
-        ...state.statState,
-        stat: { ...state.statState.stat, ...action.payload },
+        ...state.statModule,
+        stat: { ...state.statModule.stat, ...action.payload },
       };
     default:
-      return state.statState;
+      return state.statModule;
   }
 };
 

@@ -18,29 +18,29 @@ const thresholdsReducer = (state, action) => {
   switch (action.type) {
     case THRESHOLDS_REQUEST:
       return {
-        ...state.thresholdsState,
+        ...state.thresholdsModule,
         loading: true,
         hasError: false
       };
     case THRESHOLDS_SUCCESS:
       return {
-        ...state.thresholdsState,
+        ...state.thresholdsModule,
         loading: false,
         hasError: false
       };
     case THRESHOLDS_FAILURE:
       return {
-        ...state.thresholdsState,
+        ...state.thresholdsModule,
         loading: false,
         hasError: true
       };
     case THRESHOLDS_UPDATE:
       return {
-        ...state.thresholdsState,
+        ...state.thresholdsModule,
         thresholds: [...action.payload],
       };
     default:
-      return state.thresholdsState;
+      return state.thresholdsModule;
   }
 };
 

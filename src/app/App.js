@@ -16,7 +16,7 @@ const App = ({ fetchParameters, fetchThresholds, wsConnect }) => {
     // wsConnect();
     fetchParameters();
     fetchThresholds();
-  }, [])
+  }, [fetchParameters, fetchThresholds])
 
   return (
     <div className="app">

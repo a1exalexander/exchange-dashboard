@@ -15,7 +15,11 @@ import {
   THRESHOLDS_REQUEST,
   THRESHOLDS_SUCCESS,
   THRESHOLDS_UPDATE,
-  THRESHOLDS_FAILURE
+  THRESHOLDS_FAILURE,
+  CUSTOM_LEVELS_REQUEST,
+  CUSTOM_LEVELS_UPDATE,
+  CUSTOM_LEVELS_SUCCESS,
+  CUSTOM_LEVELS_FAILURE
 } from '../constants';
 import HttpService from '../services/httpService';
 import { WESOCKET_ROOT } from '../api';
@@ -60,3 +64,27 @@ export const fetchChart = () => async dispatch => {
     dispatch(CHART_FAILURE);
   }
 };
+
+export const customLevelAdd = (newLevel) => async (dispatch, getState) => {
+  dispatch(CUSTOM_LEVELS_REQUEST);
+  try {
+    const payload = [...getState().customLevelsModule.levels, {...newLevel, id: Date.now()}];
+    dispatch([CUSTOM_LEVELS_UPDATE, payload]);
+    dispatch(CUSTOM_LEVELS_SUCCESS);
+    return 1;
+  } catch (e) {
+    dispatch(CUSTOM_LEVELS_FAILURE)
+    return 0;
+  }
+}
+
+export const customLevelRemove = (removeId) => async (dispatch, getState) => {
+  dispatch(CUSTOM_LEVELS_REQUEST);
+  try {
+    const payload = getState().customLevelsModule.levels.filter(({ id }) => id !== removeId);
+    dispatch([CUSTOM_LEVELS_UPDATE, payload]);
+    dispatch(CUSTOM_LEVELS_SUCCESS);
+  } catch (e) {
+    dispatch(CUSTOM_LEVELS_FAILURE)
+  }
+}

@@ -37,7 +37,10 @@
       margin-right: 16px;
     }
   }
-  &__wrapper {
+  &__list {
+    list-style: none;
+  }
+  &__item {
     margin-bottom: 6px;
     @include flex-row(flex-start, center);
   }

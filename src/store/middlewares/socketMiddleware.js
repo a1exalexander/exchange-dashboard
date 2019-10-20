@@ -76,6 +76,12 @@ const socketMiddleware = () => {
             subscribe: "volume5m_XBTUSD"
         }));
         socket.send(JSON.stringify({
+          subscribe: "volume1h_XBTUSD"
+        }));
+        socket.send(JSON.stringify({
+          subscribe: "volume1d_XBTUSD"
+        }));
+        socket.send(JSON.stringify({
             subscribe: "instrument_XBTUSD"
         }))
         break;

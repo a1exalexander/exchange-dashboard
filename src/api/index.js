@@ -1,5 +1,5 @@
 const apiType = {
-  prod: 'http://django:5000',
+  prod: 'http://0.0.0.0:5000',
   test: 'http://4d96faf7.ngrok.io',
 };
 

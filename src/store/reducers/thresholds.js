@@ -17,6 +17,8 @@ const thresholdsReducer = (state, action) => {
       volume_5m: '',
       volume_1h: '',
       volume_1d: '',
+      resistance: '',
+      support: '',
     };
   }
 

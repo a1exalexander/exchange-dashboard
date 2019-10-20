@@ -1,4 +1,4 @@
-import { WS_CONNECT, WS_DISCONNECTED, WS_DISCONNECT, WS_ERROR, WS_CONNECTED, WS_MESSAGE, STAT_UPDATE } from '../../constants';
+import { WS_CONNECT, WS_DISCONNECTED, WS_DISCONNECT, WS_ERROR, WS_CONNECTED, STAT_UPDATE } from '../../constants';
 import logger from '../../services/logger';
 import io from 'socket.io-client';
 

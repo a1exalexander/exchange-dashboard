@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { thresholdsUpdateAlert } from '../store/actions';
 
-const SectionVolume = props => {
+const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert }) => {
   const handleChange = (type, period) => e => {
     const { value } = e.target;
-    props.thresholdsUpdateAlert({ type, value }, period);
+    thresholdsUpdateAlert({ type, value }, period);
   };
 
   return (
@@ -18,13 +18,13 @@ const SectionVolume = props => {
             </span>
             <input
               type="text"
-              value={props.volume_1m}
+              value={thresholds.volume_1m}
               onChange={handleChange('volume_1m', '1m')}
               placeholder="alert threshold in %"
               className="section__input section__input--level"
             />
           </div>
-          <span className="section__value">{`${'+54965'} USD (${+147.54}%)`}</span>
+          <span className="section__value">{stat.volume_change_1m}</span>
         </li>
         <li className="section__item">
           <div className="section__wrapper">
@@ -33,13 +33,13 @@ const SectionVolume = props => {
             </span>
             <input
               type="text"
-              value={props.volume_5m}
+              value={thresholds.volume_5m}
               onChange={handleChange('volume_5m', '5m')}
               placeholder="alert threshold in %"
               className="section__input section__input--level"
             />
           </div>
-          <span className="section__value">{`${'+54965'} USD (${+147.54}%)`}</span>
+          <span className="section__value">{stat.volume_change_5m}</span>
         </li>
         <li className="section__item">
           <div className="section__wrapper">
@@ -48,13 +48,13 @@ const SectionVolume = props => {
             </span>
             <input
               type="text"
-              value={props.volume_1h}
+              value={thresholds.volume_1h}
               onChange={handleChange('volume_1h', '1h')}
               placeholder="alert threshold in %"
               className="section__input section__input--level"
             />
           </div>
-          <span className="section__value">{`${'+54965'} USD (${+147.54}%)`}</span>
+          <span className="section__value">{stat.volume_change_1h}</span>
         </li>
         <li className="section__item">
           <div className="section__wrapper">
@@ -63,13 +63,13 @@ const SectionVolume = props => {
             </span>
             <input
               type="text"
-              value={props.volume_1d}
+              value={thresholds.volume_1d}
               onChange={handleChange('volume_1d', '1d')}
               placeholder="alert threshold in %"
               className="section__input section__input--level"
             />
           </div>
-          <span className="section__value">{`${'+54965'} USD (${+147.54}%)`}</span>
+          <span className="section__value">{stat.volume_change_1d}</span>
         </li>
       </ul>
     </div>
@@ -77,6 +77,6 @@ const SectionVolume = props => {
 };
 
 export default connect(
-  ({ thresholdsModule }) => ({ ...thresholdsModule }),
+  ({ thresholdsModule: thresholds, statModule: { stat } }) => ({ thresholds, stat }),
   { thresholdsUpdateAlert }
 )(SectionVolume);

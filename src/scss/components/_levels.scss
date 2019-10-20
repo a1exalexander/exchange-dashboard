@@ -2,12 +2,13 @@
   padding: 16px 0;
   max-width: 80%;
   &__head {
-    @include flex-row(space-between);
+    @include flex-row;
     max-width: 50%;
     margin-bottom: 12px;
   }
   &__title {
     line-height: 1;
+    flex: 1 0 140px;
   }
   &__select-wrapper {
     width: 90px;

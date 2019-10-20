@@ -13,7 +13,7 @@ const LevelsHead = () => {
           <input type="number" placeholder="min touches" className="levels__input levels__input--mr"/>
           <input type="number" placeholder="likeliness percent" className="levels__input levels__input--mr"/>
           <input type="number" placeholder="bounce percent" className="levels__input levels__input--mr"/>
-          <button className="levels__submit" type="submit">update</button>
+          <button onClick={(e) => e.preventDefault()} className="levels__submit" type="submit">update</button>
         </div>
       </form>
     </div>

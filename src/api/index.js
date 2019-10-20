@@ -1,11 +1,11 @@
 const apiType = {
   prod: 'http://0.0.0.0:5000',
-  test: 'http://4d96faf7.ngrok.io',
+  test: 'http://ac0ffeea.ngrok.io',
 };
 
 const socketType = {
   prod: 'ws://0.0.0.0:5000/ws/ticks/',
-  test: 'ws://243ebb05.ngrok.io/ws/ticks/',
+  test: 'ws://ac0ffeea.ngrok.io/ws/ticks/',
 };
 
 const ROOT_URL = apiType[process.env.REACT_APP_API];

@@ -13,7 +13,7 @@ import Chart from '../components/Chart';
 const App = ({ fetchData, wsConnect }) => {
 
   useEffect(() => {
-    wsConnect();
+    // wsConnect();
     fetchData();
   }, [wsConnect, fetchData])
 

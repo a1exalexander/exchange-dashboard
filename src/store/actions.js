@@ -41,7 +41,7 @@ export const fetchParameters = () => async dispatch => {
   dispatch(PARAMETERS_REQUEST);
   try {
     const payload = await httpService.fetchParameters();
-    payload.foreach(({ key, value }) => {
+    payload.forEach(({ key, value }) => {
       dispatch([STAT_UPDATE, { [key]: value }]);
     })
     dispatch([PARAMETERS_UPDATE, payload]);
@@ -66,7 +66,8 @@ export const fetchThresholds = () => async dispatch => {
   dispatch(THRESHOLDS_REQUEST);
   try {
     const payload = await httpService.fetchThresholds();
-    payload.foreach(({ timeframe, threshold_value_percent: value, threshold_type }) => {
+    console.log(payload)
+    payload.forEach(({ timeframe, threshold_value_percent: value, threshold_type }) => {
       switch (threshold_type) {
         case 'VOLUME_CHANGE':
             switch (timeframe) {
@@ -99,6 +100,7 @@ export const fetchThresholds = () => async dispatch => {
     dispatch([THRESHOLDS_UPDATE, payload]);
     dispatch(THRESHOLDS_SUCCESS);
   } catch (e) {
+    console.log(e)
     dispatch(THRESHOLDS_FAILURE);
   }
 };

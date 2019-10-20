@@ -5,6 +5,7 @@ import IconPlus from './icons/IconPlus';
 import models from '../models';
 
 const LevelsCustom = ({ customLevelAdd, customLevelRemove, levels }) => {
+  
   const [newLevel, updateNewLevel] = useState(models.level);
 
   const handleChange = e => {
@@ -12,7 +13,7 @@ const LevelsCustom = ({ customLevelAdd, customLevelRemove, levels }) => {
     updateNewLevel({ ...newLevel, price });
   };
 
-  const addLevel = async e => {
+  const addLevel = async () => {
     const ok = await customLevelAdd(newLevel);
     if (ok) updateNewLevel(models.level);
   };

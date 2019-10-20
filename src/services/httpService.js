@@ -30,10 +30,26 @@ class HttpService {
       throw e;
     }
   };
+  fetchFunding = async () => {
+    try {
+      const { data } = await axios.get(url.funding);
+      return data;
+    } catch (e) {
+      throw e;
+    }
+  };
   fetchThresholds = async () => {
     try {
       const { data } = await axios.get(url.thresholds);
       return data;
+    } catch (e) {
+      throw e;
+    }
+  };
+  thresholdsAlertsUpdate = async (payload) => {
+    try {
+      await axios.put(`${url.thresholds}/${payload.timeframe}`, payload);
+      return;
     } catch (e) {
       throw e;
     }

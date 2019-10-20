@@ -18,6 +18,12 @@
   }
   &__value {
     font-weight: 500;
+    &--col {
+      flex: 1 0 200px;
+    }
+  }
+  &__wrapper {
+    @include flex-row;
   }
   &__input {
     @extend %input;
@@ -27,6 +33,7 @@
     }
     &--level {
       margin-left: 20px;
+      flex: 1 0 200px;
     }
   }
 }

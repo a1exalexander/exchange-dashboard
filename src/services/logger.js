@@ -36,19 +36,19 @@ const getErrorMessage = (error = 'Somthing Wrong') => {
 export { getErrorMessage };
 
 export default {
-  debug: (msg, name = 'DEBUG') => {
+  debug: (msg = '', name = '') => {
     onLogger(name, msg, 'debug');
   },
-  info: (msg, name = 'INFO') => {
+  info: (msg = '', name = '') => {
     onLogger(name, msg, 'info');
   },
-  error: (error = 'Something wrong!', name = 'ERROR') => {
+  error: (error = 'Something wrong!', name = '') => {
     onLogger(name, getErrorMessage(error), 'error');
   },
-  warn: (msg, name = 'WARN') => {
+  warn: (msg = '', name = '') => {
     onLogger(name, msg, 'warn');
   },
-  log: (msg, name = 'LOG') => {
+  log: (msg = '', name = '') => {
     onLogger(name, msg, 'log');
   }
 };

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchParameters, fetchThresholds, wsConnect } from '../store/actions';
+import { fetchData, wsConnect } from '../store/actions';
 import SectionHead from '../components/SectionHead';
 import SectionFunding from '../components/SectionFunding';
 import SectionVolume from '../components/SectionVolume';
@@ -10,13 +10,12 @@ import LevelsSupport from '../components/LevelsSupport';
 import LevelsCustom from '../components/LevelsCustom';
 import Chart from '../components/Chart';
 
-const App = ({ fetchParameters, fetchThresholds, wsConnect }) => {
+const App = ({ fetchData, wsConnect }) => {
 
   useEffect(() => {
-    // wsConnect();
-    fetchParameters();
-    fetchThresholds();
-  }, [fetchParameters, fetchThresholds])
+    wsConnect();
+    fetchData();
+  }, [wsConnect, fetchData])
 
   return (
     <div className="app">
@@ -44,5 +43,5 @@ const App = ({ fetchParameters, fetchThresholds, wsConnect }) => {
 
 export default connect(
   null,
-  { wsConnect, fetchThresholds, fetchParameters }
+  { wsConnect, fetchData }
 )(App);

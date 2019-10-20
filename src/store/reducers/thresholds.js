@@ -2,7 +2,8 @@ import {
   THRESHOLDS_REQUEST,
   THRESHOLDS_SUCCESS,
   THRESHOLDS_FAILURE,
-  THRESHOLDS_UPDATE
+  THRESHOLDS_UPDATE,
+  THRESHOLDS_UPDATE_ALERT
 } from '../../constants';
 
 const thresholdsReducer = (state, action) => {
@@ -12,6 +13,10 @@ const thresholdsReducer = (state, action) => {
       loading: false,
       hasError: false,
       thresholds: [],
+      volume_1m: '',
+      volume_5m: '',
+      volume_1h: '',
+      volume_1d: '',
     };
   }
 
@@ -38,6 +43,11 @@ const thresholdsReducer = (state, action) => {
       return {
         ...state.thresholdsModule,
         thresholds: [...action.payload],
+      };
+    case THRESHOLDS_UPDATE_ALERT:
+      return {
+        ...state.thresholdsModule,
+        ...action.payload,
       };
     default:
       return state.thresholdsModule;

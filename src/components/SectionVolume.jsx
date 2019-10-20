@@ -1,56 +1,82 @@
-import React from "react";
+import React from 'react';
+import { connect } from 'react-redux';
+import { thresholdsUpdateAlert } from '../store/actions';
 
-const SectionVolume = () => {
+const SectionVolume = props => {
+  const handleChange = (type, period) => e => {
+    const { value } = e.target;
+    props.thresholdsUpdateAlert({ type, value }, period);
+  };
+
   return (
-    <div className="section section--last">
+    <div className="section">
       <ul className="section__list">
         <li className="section__item">
-          <span className="section__value">1m USD Volume Change</span>
           <div className="section__wrapper">
-            <span className="section__value">{`${"+54965"} USD (${+147.54}%)`}</span>
+            <span className="section__value section__value--col">
+              1m USD Volume Change
+            </span>
             <input
               type="text"
+              value={props.volume_1m}
+              onChange={handleChange('volume_1m', '1m')}
               placeholder="alert threshold in %"
               className="section__input section__input--level"
             />
           </div>
+          <span className="section__value">{`${'+54965'} USD (${+147.54}%)`}</span>
         </li>
         <li className="section__item">
-          <span className="section__value">5m USD Volume Change</span>
           <div className="section__wrapper">
-            <span className="section__value">{`${"+54965"} USD (${+147.54}%)`}</span>
+            <span className="section__value section__value--col">
+              5m USD Volume Change
+            </span>
             <input
               type="text"
+              value={props.volume_5m}
+              onChange={handleChange('volume_5m', '5m')}
               placeholder="alert threshold in %"
               className="section__input section__input--level"
             />
           </div>
+          <span className="section__value">{`${'+54965'} USD (${+147.54}%)`}</span>
         </li>
         <li className="section__item">
-          <span className="section__value">1h USD Volume Change</span>
           <div className="section__wrapper">
-            <span className="section__value">{`${"+54965"} USD (${+147.54}%)`}</span>
+            <span className="section__value section__value--col">
+              1h USD Volume Change
+            </span>
             <input
               type="text"
+              value={props.volume_1h}
+              onChange={handleChange('volume_1h', '1h')}
               placeholder="alert threshold in %"
               className="section__input section__input--level"
             />
           </div>
+          <span className="section__value">{`${'+54965'} USD (${+147.54}%)`}</span>
         </li>
         <li className="section__item">
-          <span className="section__value">1d USD Volume Change</span>
           <div className="section__wrapper">
-            <span className="section__value">{`${"+54965"} USD (${+147.54}%)`}</span>
+            <span className="section__value section__value--col">
+              1d USD Volume Change
+            </span>
             <input
               type="text"
+              value={props.volume_1d}
+              onChange={handleChange('volume_1d', '1d')}
               placeholder="alert threshold in %"
               className="section__input section__input--level"
             />
           </div>
+          <span className="section__value">{`${'+54965'} USD (${+147.54}%)`}</span>
         </li>
       </ul>
     </div>
   );
 };
 
-export default SectionVolume;
+export default connect(
+  ({ thresholdsModule }) => ({ ...thresholdsModule }),
+  { thresholdsUpdateAlert }
+)(SectionVolume);

@@ -1,4 +1,4 @@
-import { WS_CONNECT, WS_DISCONNECTED, WS_DISCONNECT, WS_ERROR, WS_CONNECTED, WS_MESSAGE } from '../../constants';
+import { WS_CONNECT, WS_DISCONNECTED, WS_DISCONNECT, WS_ERROR, WS_CONNECTED, WS_MESSAGE, STAT_UPDATE } from '../../constants';
 import logger from '../../services/logger';
 import io from 'socket.io-client';
 
@@ -26,19 +26,25 @@ const socketMiddleware = () => {
     logger.info(payload, 'WEBSOCKET MESSAGE');
     switch (payload.type) {
       case 'trade':
-        store.dispatch([WS_MESSAGE, { type: 'current_price', value: payload['price']  }]);
+        store.dispatch([STAT_UPDATE, { 'price': payload['price']  }]);
         break;
       case 'trade_volume_XBTUSD':
-        store.dispatch([WS_MESSAGE, { type: 'last_volumes', value: payload['trade_volume']  }]);
+        store.dispatch([STAT_UPDATE, { 'volume_of_last': payload['trade_volume']  }]);
         break;
       case 'volume1m':
-       store.dispatch([WS_MESSAGE, { type: 'volume_change_1m', value: payload['volume1m']  }]);
+       store.dispatch([STAT_UPDATE, { 'volume_change_1m': payload['volume1m']  }]);
         break;
       case 'volume5m':
-        store.dispatch([WS_MESSAGE, { type: 'volume_change_5m', value: payload['volume5m']  }]);
+        store.dispatch([STAT_UPDATE, { 'volume_change_5m': payload['volume5m']  }]);
+        break;
+      case 'volume1h':
+        store.dispatch([STAT_UPDATE, { 'volume_change_1h': payload['volume5h']  }]);
+        break;
+      case 'volume1d':
+        store.dispatch([STAT_UPDATE, { 'volume_change_1d': payload['volume5d']  }]);
         break;
       case 'instrument':
-        store.dispatch([WS_MESSAGE, { type: 'open_interest', value: payload['open_interest']  }]);
+        store.dispatch([STAT_UPDATE, { 'open_inerest': payload['open_interest']  }]);
         break;
       default:
         break;

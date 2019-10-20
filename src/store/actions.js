@@ -69,16 +69,16 @@ export const fetchThresholds = () => async dispatch => {
     payload.foreach(({ timeframe, threshold_value_percent: value }) => {
       switch (timeframe) {
         case '1m':
-          dispatch([STAT_UPDATE, { 'volume_1m': value }]);
+          dispatch([THRESHOLDS_UPDATE_ALERT, { 'volume_1m': value }]);
           break;
         case '5m':
-          dispatch([STAT_UPDATE, { 'volume_5m': value }]);
+          dispatch([THRESHOLDS_UPDATE_ALERT, { 'volume_5m': value }]);
           break;
         case '1h':
-          dispatch([STAT_UPDATE, { 'volume_1h': value }]);
+          dispatch([THRESHOLDS_UPDATE_ALERT, { 'volume_1h': value }]);
           break;
         case '1d':
-          dispatch([STAT_UPDATE, { 'volume_1d': value }]);
+          dispatch([THRESHOLDS_UPDATE_ALERT, { 'volume_1d': value }]);
           break;
       default:
         break;

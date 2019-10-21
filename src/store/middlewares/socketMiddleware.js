@@ -1,6 +1,5 @@
 import { WS_CONNECT, WS_DISCONNECTED, WS_DISCONNECT, WS_ERROR, WS_CONNECTED, STAT_UPDATE } from '../../constants';
 import logger from '../../services/logger';
-import { wsConnected } from '../actions';
 
 const socketMiddleware = () => {
   let socket = null;

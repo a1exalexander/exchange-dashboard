@@ -6,29 +6,29 @@ const socketMiddleware = () => {
   let originalSend = null;
 
   const onOpen = store => (event) => {
-    logger.info(event, 'WEBSOCKET OPEN');
+    logger.info({...event}, 'WEBSOCKET OPEN');
     store.dispatch(WS_CONNECTED);
   };
 
-  const onClose = store => () => {
-    logger.info('', 'WEBSOCKET DISCONECTED');
+  const onClose = store => (e) => {
+    logger.info(e, 'WEBSOCKET DISCONECTED');
     store.dispatch(WS_DISCONNECTED);
   };
 
-  const onError = store => () => {
-    logger.error('', 'WEBSOCKET ERROR');
+  const onError = store => (e) => {
+    logger.error(e, 'WEBSOCKET ERROR');
     store.dispatch(WS_ERROR);
   };
 
   const onSend = (...args) => {
-    logger.info(args, 'WEBSOCKET SEND');
+    logger.info(...args, 'WEBSOCKET SEND');
     return originalSend.apply(socket, args)
   };
 
 
   const onMessage = store => (e) => {
     const payload = JSON.parse(e.data);
-    logger.info(payload, 'WEBSOCKET MESSAGE');
+    // logger.info(payload, 'WEBSOCKET MESSAGE');
     switch (payload.type) {
       case 'trade':
         store.dispatch([STAT_UPDATE, { 'price': payload['price']  }]);
@@ -66,11 +66,11 @@ const socketMiddleware = () => {
         
         socket = new WebSocket(action.payload);
         originalSend = socket.send;
+        socket.onopen = onOpen(store);
         socket.send = onSend;
         socket.onclose = onClose(store);
-        socket.onopen = onOpen(store);
         socket.onerror = onError(store);
-        socket.onemessage = onMessage(store);
+        socket.onmessage = onMessage(store);
         break;
         
       case WS_CONNECTED:

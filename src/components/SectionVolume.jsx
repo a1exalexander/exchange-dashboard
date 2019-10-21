@@ -25,7 +25,7 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert, thresholdsUpda
 
   const handleEnter = (idx) => (e) => {
     if (e.key === 'Enter') {
-      updateValue(idx)();
+      document.getElementById(types[idx][0]).blur();
     }
   }
 
@@ -38,6 +38,7 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert, thresholdsUpda
               1m USD Volume Change
             </span>
             <input
+              id={types[0][0]}
               type="text"
               value={thresholds.volume_1m}
               onChange={handleChange(0)}
@@ -55,6 +56,7 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert, thresholdsUpda
               5m USD Volume Change
             </span>
             <input
+              id={types[1][0]}
               type="text"
               value={thresholds.volume_5m}
               onChange={handleChange(1)}
@@ -72,6 +74,7 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert, thresholdsUpda
               1h USD Volume Change
             </span>
             <input
+              id={types[2][0]}
               type="text"
               value={thresholds.volume_1h}
               onChange={handleChange(2)}
@@ -89,6 +92,7 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert, thresholdsUpda
               1d USD Volume Change
             </span>
             <input
+              id={types[3][0]}
               type="text"
               value={thresholds.volume_1d}
               onChange={handleChange(3)}

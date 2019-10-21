@@ -16,7 +16,7 @@ const SectionHead = ({ stat, fetchParametersUpdate, parametersUpdate }) => {
 
   const handleEnter = (e) => {
     if (e.key === 'Enter') {
-      updateValue();
+      document.getElementById('volume_last').blur();
     }
   }
 
@@ -31,6 +31,7 @@ const SectionHead = ({ stat, fetchParametersUpdate, parametersUpdate }) => {
           <div className="section__wrapper">
             <span className="section__value">Volume of last</span>
             <input
+              id='volume_last'
               type="number"
               value={stat.VOLUME_NUMBER_OF_TRADES}
               onChange={handleChange}

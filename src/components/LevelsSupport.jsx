@@ -22,7 +22,7 @@ const LevelsSupport = ({
 
   const handleEnter = e => {
     if (e.key === 'Enter') {
-      updateValue();
+      document.getElementById('support').blur();
     }
   };
 
@@ -31,6 +31,7 @@ const LevelsSupport = ({
       <div className="levels__head">
         <h3 className="levels__title">Support</h3>
         <input
+          id='support'
           onChange={handleChange}
           onKeyUp={handleEnter}
           onBlur={updateValue}

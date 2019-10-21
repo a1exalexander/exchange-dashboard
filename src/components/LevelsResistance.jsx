@@ -22,7 +22,7 @@ const LevelsResistance = ({
 
   const handleEnter = e => {
     if (e.key === 'Enter') {
-      updateValue();
+      document.getElementById('resistance').blur();
     }
   };
 
@@ -31,6 +31,7 @@ const LevelsResistance = ({
       <div className="levels__head">
         <h3 className="levels__title">Resistance</h3>
         <input
+          id='resistance'
           onChange={handleChange}
           onKeyUp={handleEnter}
           onBlur={updateValue}

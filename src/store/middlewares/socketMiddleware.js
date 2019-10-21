@@ -16,6 +16,7 @@ const socketMiddleware = () => {
   };
 
   const onError = store => (e) => {
+    logger.info(e, 'WEBSOCKET ERROR');
     logger.error(e, 'WEBSOCKET ERROR');
     store.dispatch(WS_ERROR);
   };
@@ -107,10 +108,8 @@ const socketMiddleware = () => {
         break;
 
       case WS_ERROR:
-        logger.error('', 'WEBSOCKET ERROR');
         if (socket !== null) {
           socket.close();
-          socket.open();
         }
         break;
 

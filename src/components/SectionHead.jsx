@@ -1,7 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { fetchParametersUpdate, parametersUpdate } from '../store/actions';
 
-const SectionHead = ({ stat }) => {
+const SectionHead = ({ stat, fetchParametersUpdate, parametersUpdate }) => {
+
+  const handleChange = e => {
+    const { value } = e.target;
+    parametersUpdate(value, 'VOLUME_NUMBER_OF_TRADES');
+  };
+
+  const updateValue = (e) => {
+    if (e) e.preventDefault()
+    fetchParametersUpdate('VOLUME_NUMBER_OF_TRADES');
+  };
+
+  const handleEnter = (e) => {
+    if (e.key === 'Enter') {
+      updateValue();
+    }
+  }
 
   return (
     <div className="section">
@@ -15,8 +32,10 @@ const SectionHead = ({ stat }) => {
             <span className="section__value">Volume of last</span>
             <input
               type="number"
-              value={stat.trades}
-              readOnly
+              value={stat.VOLUME_NUMBER_OF_TRADES}
+              onChange={handleChange}
+              onKeyUp={handleEnter}
+              onBlur={updateValue}
               className="section__input section__input--trades"
             />
             <span className="section__value">trades</span>
@@ -32,4 +51,4 @@ const SectionHead = ({ stat }) => {
   );
 };
 
-export default connect(({ statModule: { stat } }) => ({ stat }))(SectionHead);
+export default connect(({ statModule: { stat } }) => ({ stat }), { parametersUpdate, fetchParametersUpdate })(SectionHead);

@@ -1,10 +1,10 @@
 import { WS_CONNECT, WS_DISCONNECTED, WS_DISCONNECT, WS_ERROR, WS_CONNECTED, STAT_UPDATE } from '../../constants';
 import logger from '../../services/logger';
-import io from 'socket.io-client';
-
+import { wsConnected } from '../actions';
 
 const socketMiddleware = () => {
   let socket = null;
+  let originalSend = null;
 
   const onOpen = store => (event) => {
     logger.info(event, 'WEBSOCKET OPEN');
@@ -21,6 +21,12 @@ const socketMiddleware = () => {
     store.dispatch(WS_ERROR);
   };
 
+  const onSend = (...args) => {
+    logger.info(args, 'WEBSOCKET SEND');
+    return originalSend.apply(socket, args)
+  };
+
+
   const onMessage = store => (e) => {
     const payload = JSON.parse(e.data);
     logger.info(payload, 'WEBSOCKET MESSAGE');
@@ -32,7 +38,7 @@ const socketMiddleware = () => {
         store.dispatch([STAT_UPDATE, { 'volume_of_last': payload['trade_volume']  }]);
         break;
       case 'volume1m':
-       store.dispatch([STAT_UPDATE, { 'volume_change_1m': payload['volume1m']  }]);
+        store.dispatch([STAT_UPDATE, { 'volume_change_1m': payload['volume1m']  }]);
         break;
       case 'volume5m':
         store.dispatch([STAT_UPDATE, { 'volume_change_5m': payload['volume5m']  }]);
@@ -58,11 +64,17 @@ const socketMiddleware = () => {
         if (socket !== null) {
           socket.close();
         }
-        socket = io(action.payload);
+        
+        socket = new WebSocket(action.payload);
+        originalSend = socket.send;
+        socket.send = onSend;
         socket.onclose = onClose(store);
         socket.onopen = onOpen(store);
         socket.onerror = onError(store);
         socket.onemessage = onMessage(store);
+        break;
+        
+      case WS_CONNECTED:
         socket.send(JSON.stringify({
           subscribe: "XBTUSD"
         }));
@@ -91,6 +103,7 @@ const socketMiddleware = () => {
           socket.close();
         }
         socket = null;
+        originalSend = null;
         logger.info('', 'WEBSOCKET CLOSED');
         break;
 

@@ -18,7 +18,7 @@ const LevelsCustom = ({ customLevelAdd, customLevelRemove, levels }) => {
     if (ok) updateNewLevel(models.level);
   };
 
-  const handleKeyEnter = (e) => {
+  const handleEnter = (e) => {
     if (e.key === 'Enter') {
       addLevel();
     }
@@ -54,7 +54,7 @@ const LevelsCustom = ({ customLevelAdd, customLevelRemove, levels }) => {
         <ul className="levels__list">{levelsList}</ul>
         <div className="levels__item">
           <input
-            onKeyUp={handleKeyEnter}
+            onKeyUp={handleEnter}
             value={newLevel.price}
             onChange={handleChange}
             type="number"

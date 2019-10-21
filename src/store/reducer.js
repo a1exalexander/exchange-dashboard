@@ -1,4 +1,4 @@
-import { chartReducer, parametersReducer, thresholdsReducer, customLevelsReducer, statReducer } from './reducers';
+import { chartReducer, parametersReducer, thresholdsReducer, customLevelsReducer, statReducer, websocketReducer } from './reducers';
 
 const reducer = (state, action) => {
   return {
@@ -7,6 +7,7 @@ const reducer = (state, action) => {
     thresholdsModule: thresholdsReducer(state, action),
     chartModule: chartReducer(state, action),
     statModule: statReducer(state, action),
+    websocketModule: websocketReducer(state, action),
   };
 };
 

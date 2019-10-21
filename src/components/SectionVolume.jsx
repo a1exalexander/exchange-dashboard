@@ -1,12 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { thresholdsUpdateAlert } from '../store/actions';
+import { thresholdsUpdateAlert, thresholdsUpdateAlertRequest } from '../store/actions';
 
-const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert }) => {
-  const handleChange = (type, period) => e => {
+const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert, thresholdsUpdateAlertRequest }) => {
+  
+  const types = [
+    ['volume_1m', '1m'],
+    ['volume_5m', '5m'],
+    ['volume_1h', '1h'],
+    ['volume_1d', '1d'],
+  ];
+
+  const handleChange = (idx) => e => {
     const { value } = e.target;
+    const { [idx]: { 0: type, 1: period },  } = types;
     thresholdsUpdateAlert({ type, value }, period);
   };
+
+  const updateValue = (idx) => (e) => {
+    if (e) e.preventDefault()
+    const { [idx]: { 0: type, 1: period },  } = types;
+    thresholdsUpdateAlertRequest(type, period);
+  };
+
+  const handleEnter = (idx) => (e) => {
+    if (e.key === 'Enter') {
+      updateValue(idx)();
+    }
+  }
 
   return (
     <div className="section">
@@ -19,7 +40,9 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert }) => {
             <input
               type="text"
               value={thresholds.volume_1m}
-              onChange={handleChange('volume_1m', '1m')}
+              onChange={handleChange(0)}
+              onKeyUp={handleEnter(0)}
+              onBlur={updateValue(0)}
               placeholder="alert threshold in %"
               className="section__input section__input--level"
             />
@@ -34,7 +57,9 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert }) => {
             <input
               type="text"
               value={thresholds.volume_5m}
-              onChange={handleChange('volume_5m', '5m')}
+              onChange={handleChange(1)}
+              onKeyUp={handleEnter(1)}
+              onBlur={updateValue(1)}
               placeholder="alert threshold in %"
               className="section__input section__input--level"
             />
@@ -49,7 +74,9 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert }) => {
             <input
               type="text"
               value={thresholds.volume_1h}
-              onChange={handleChange('volume_1h', '1h')}
+              onChange={handleChange(2)}
+              onKeyUp={handleEnter(2)}
+              onBlur={updateValue(2)}
               placeholder="alert threshold in %"
               className="section__input section__input--level"
             />
@@ -64,7 +91,9 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert }) => {
             <input
               type="text"
               value={thresholds.volume_1d}
-              onChange={handleChange('volume_1d', '1d')}
+              onChange={handleChange(3)}
+              onKeyUp={handleEnter(3)}
+              onBlur={updateValue(3)}
               placeholder="alert threshold in %"
               className="section__input section__input--level"
             />
@@ -78,5 +107,5 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert }) => {
 
 export default connect(
   ({ thresholdsModule: thresholds, statModule: { stat } }) => ({ thresholds, stat }),
-  { thresholdsUpdateAlert }
+  { thresholdsUpdateAlert, thresholdsUpdateAlertRequest }
 )(SectionVolume);

@@ -15,16 +15,16 @@ const getErrorMessage = (error = 'Somthing Wrong') => {
   if (error instanceof Object) {
     switch (true) {
       case has.call(error, 'message'):
-        msg = error.data;
+        msg = error.message;
         break;
       case has.call(error, 'msg'):
-        msg = error.data;
+        msg = error.msg;
         break;
       case has.call(error, 'data'):
         msg = error.data;
         break;
       case has.call(error, 'response'):
-        msg = error.response.data;
+        msg = error.response.statusText;
         break;
       default:
         break;

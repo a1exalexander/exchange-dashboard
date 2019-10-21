@@ -3,14 +3,14 @@ import reducer from './reducer';
 import thunk from 'redux-thunk';
 import actionStringMiddleware from './middlewares/actionStringMiddleware';
 import socketMiddleware from './middlewares/socketMiddleware';
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 const middlewares = [thunk, actionStringMiddleware, socketMiddleware];
 
 const store = createStore(
   reducer,
-  composeEnhancers(applyMiddleware(...middlewares)),
+  compose(
+    applyMiddleware(...middlewares),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  ),
 );
 
 export default store;

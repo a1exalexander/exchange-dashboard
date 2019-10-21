@@ -17,7 +17,8 @@ axios.interceptors.response.use((response) => {
   }
   return response;
 }, (error) => {
-  logger.error(error);
+  const logName = `[URL: ${error.response.config.url}, STATUS: ${error.response.status}]`;
+  logger.error(error, logName);
   return Promise.reject(getErrorMessage(error));
 });
 
@@ -28,6 +29,14 @@ class HttpService {
       return data;
     } catch (e) {
       throw e;
+    }
+  };
+  fetchParametersUpdate = async (payload) => {
+    try {
+      await axios.put(`${url.parameters}/${payload.id}/`, payload);
+      return;
+    } catch (e) {
+      return;
     }
   };
   fetchFunding = async () => {
@@ -48,10 +57,10 @@ class HttpService {
   };
   thresholdsAlertsUpdate = async (payload) => {
     try {
-      await axios.put(`${url.thresholds}/${payload.id}`, payload);
+      await axios.put(`${url.thresholds}/${payload.id}/`, payload);
       return;
     } catch (e) {
-      throw e;
+      return;
     }
   };
   fetchChart = async () => {

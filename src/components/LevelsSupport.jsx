@@ -1,11 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { thresholdsUpdateAlert } from '../store/actions';
+import {
+  thresholdsUpdateAlert,
+  thresholdsUpdateAlertRequest
+} from '../store/actions';
 
-const LevelsSupport = ({ thresholds, thresholdsUpdateAlert }) => {
+const LevelsSupport = ({
+  thresholds,
+  thresholdsUpdateAlert,
+  thresholdsUpdateAlertRequest
+}) => {
   const handleChange = e => {
     const { value } = e.target;
     thresholdsUpdateAlert(value, 'support');
+  };
+
+  const updateValue = e => {
+    if (e) e.preventDefault();
+    thresholdsUpdateAlertRequest('support');
+  };
+
+  const handleEnter = e => {
+    if (e.key === 'Enter') {
+      updateValue();
+    }
   };
 
   return (
@@ -14,6 +32,8 @@ const LevelsSupport = ({ thresholds, thresholdsUpdateAlert }) => {
         <h3 className="levels__title">Support</h3>
         <input
           onChange={handleChange}
+          onKeyUp={handleEnter}
+          onBlur={updateValue}
           value={thresholds.support}
           type="number"
           placeholder="alert threshold in %"
@@ -40,5 +60,5 @@ const LevelsSupport = ({ thresholds, thresholdsUpdateAlert }) => {
 
 export default connect(
   ({ thresholdsModule: thresholds }) => ({ thresholds }),
-  { thresholdsUpdateAlert }
+  { thresholdsUpdateAlert, thresholdsUpdateAlertRequest }
 )(LevelsSupport);

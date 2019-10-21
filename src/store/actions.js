@@ -33,7 +33,7 @@ const httpService = new HttpService();
 
 export const wsConnect = () => dispatch => dispatch([WS_CONNECT, WESOCKET_ROOT]);
 export const wsConnecting = () => WS_CONNECTING;
-export const wsConnected = () => WS_CONNECTED;
+export const wsConnected = () => ({ type: WS_CONNECTED });
 export const wsDisconnect = () => WS_DISCONNECT;
 export const wsDisconnected = () => WS_DISCONNECTED;
 
@@ -51,6 +51,21 @@ export const fetchParameters = () => async dispatch => {
   }
 };
 
+export const fetchParametersUpdate = (type) => async (dispatch, getState) => {
+  let value = getState().statModule.stat[type];
+  const parameter = getState().parametersModule.parameters.find(({ key }) => key === type);
+  
+  if (parameter) {
+    const payload = {...parameter, value};
+    await httpService.fetchParametersUpdate(payload);
+    fetchParameters()(dispatch);
+  }
+};
+
+export const parametersUpdate = (value, key) => async (dispatch) => {
+  dispatch([STAT_UPDATE, { [key]: value }]);
+};
+
 export const fetchFunding = () => async dispatch => {
   dispatch(STAT_REQUEST);
   try {
@@ -66,7 +81,6 @@ export const fetchThresholds = () => async dispatch => {
   dispatch(THRESHOLDS_REQUEST);
   try {
     const payload = await httpService.fetchThresholds();
-    console.log(payload)
     payload.forEach(({ timeframe, threshold_value_percent: value, threshold_type }) => {
       switch (threshold_type) {
         case 'VOLUME_CHANGE':
@@ -100,7 +114,6 @@ export const fetchThresholds = () => async dispatch => {
     dispatch([THRESHOLDS_UPDATE, payload]);
     dispatch(THRESHOLDS_SUCCESS);
   } catch (e) {
-    console.log(e)
     dispatch(THRESHOLDS_FAILURE);
   }
 };
@@ -140,20 +153,24 @@ export const customLevelRemove = (removeId) => async (dispatch, getState) => {
   }
 }
 
-export const thresholdsUpdateAlert = (item, type) => async (dispatch, getState) => {
-  let threshold;
-  let threshold_value_percent = '';
+export const thresholdsUpdateAlert = (item, type) => async (dispatch) => {
   if (typeof item === 'object') {
-    threshold_value_percent = item.value;
-    dispatch([THRESHOLDS_UPDATE_ALERT, { [item.type]: threshold_value_percent }]);
-    threshold = getState().thresholdsModule.thresholds.find(({ timeframe }) => timeframe === type);
+    dispatch([THRESHOLDS_UPDATE_ALERT, { [item.type]: item.value }]);
   } else {
-    threshold_value_percent = item;
-    dispatch([THRESHOLDS_UPDATE_ALERT, { [type]: threshold_value_percent }]);
-    threshold = getState().thresholdsModule.thresholds.find(({ threshold_type }) => threshold_type === type.toUpperCase());
+    dispatch([THRESHOLDS_UPDATE_ALERT, { [type]: item }]);
+  }
+}
+
+export const thresholdsUpdateAlertRequest = (type, period) => async (dispatch, getState) => {
+  let threshold_value_percent = getState().thresholdsModule[type];
+  let threshold;
+  if (period) {
+    threshold = getState().thresholdsModule.thresholds.find(({ timeframe }) => timeframe === period);
+  } else {
+    threshold = getState().thresholdsModule.thresholds.find(({ threshold_type }) => threshold_type === String(type).toUpperCase());
   }
   
-  if (threshold_value_percent && threshold) {
+  if (threshold) {
     const payload = {...threshold, threshold_value_percent};
     await httpService.thresholdsAlertsUpdate(payload);
     fetchThresholds()(dispatch);

@@ -1,3 +1,5 @@
+import logger from '../services/logger';
+
 const apiType = {
   prod: 'http://0.0.0.0:5000',
   test: 'http://083ef843.ngrok.io',
@@ -8,8 +10,14 @@ const socketType = {
   test: 'ws://083ef843.ngrok.io/ws/ticks/',
 };
 
-const ROOT_URL = apiType[process.env.REACT_APP_API];
-const WESOCKET_ROOT = socketType[process.env.REACT_APP_API];
+const API_MODE = process.env.REACT_APP_API;
+const ROOT_URL = apiType[API_MODE];
+const WESOCKET_ROOT = socketType[API_MODE];
+
+logger.info(process.env.NODE_ENV, 'ENV');
+logger.info(API_MODE, 'MODE');
+logger.info(ROOT_URL, 'API URL');
+logger.info(WESOCKET_ROOT, 'WEBSOCKET URL');
 
 const url = {
   parameters: `${ROOT_URL}/bitmex/parameters`,

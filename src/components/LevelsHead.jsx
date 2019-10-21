@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import models from '../models';
-import logger from '../services/logger';
 
 const LevelsHead = () => {
 
@@ -13,7 +12,6 @@ const LevelsHead = () => {
 
   const update = async (e) => {
     e.preventDefault();
-    logger.info(level, 'Update levels');
     updateLevel(models.levelParams);
     return;
   }

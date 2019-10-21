@@ -1,28 +1,28 @@
 import { WS_CONNECT, WS_DISCONNECTED, WS_DISCONNECT, WS_ERROR, WS_CONNECTED, STAT_UPDATE } from '../../constants';
 import logger from '../../services/logger';
+import { WESOCKET_ROOT } from '../../api';
 
 const socketMiddleware = () => {
   let socket = null;
   let originalSend = null;
 
-  const onOpen = store => (event) => {
-    logger.info({...event}, 'WEBSOCKET OPEN');
+  const onOpen = store => (e) => {
+    logger.info({type: e.type, url: e.target.url}, 'WEBSOCKET OPEN');
     store.dispatch(WS_CONNECTED);
   };
 
   const onClose = store => (e) => {
-    logger.info(e, 'WEBSOCKET DISCONECTED');
+    logger.info({type: e.type, url: e.target.url}, 'WEBSOCKET DISCONECTED');
     store.dispatch(WS_DISCONNECTED);
   };
 
   const onError = store => (e) => {
-    logger.info(e, 'WEBSOCKET ERROR');
-    logger.error(e, 'WEBSOCKET ERROR');
+    logger.info({type: e.type, url: e.target.url}, 'WEBSOCKET ERROR');
     store.dispatch(WS_ERROR);
   };
 
   const onSend = (...args) => {
-    logger.info(...args, 'WEBSOCKET SEND');
+    logger.info(args, 'WEBSOCKET SEND');
     return originalSend.apply(socket, args)
   };
 
@@ -64,7 +64,7 @@ const socketMiddleware = () => {
         if (socket !== null) {
           socket.close();
         }
-        
+        logger.info(WESOCKET_ROOT, 'WEBSOCKET CONNECTION');
         socket = new WebSocket(action.payload);
         originalSend = socket.send;
         socket.onopen = onOpen(store);

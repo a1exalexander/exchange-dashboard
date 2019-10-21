@@ -15,7 +15,7 @@ const SectionHead = ({ stat }) => {
             <span className="section__value">Volume of last</span>
             <input
               type="number"
-              value={stat.trades}
+              value={stat.VOLUME_NUMBER_OF_TRADES}
               readOnly
               className="section__input section__input--trades"
             />

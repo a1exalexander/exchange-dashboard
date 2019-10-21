@@ -7,15 +7,13 @@ import {
   CUSTOM_LEVELS_REMOVE,
 } from '../../constants';
 
-const customLevelsReducer = (state, action) => {
+const customLevelsModule = {
+  loading: false,
+  hasError: false,
+  levels: [],
+};
 
-  if (state === undefined) {
-    return {
-      loading: false,
-      hasError: false,
-      levels: [],
-    };
-  }
+const customLevelsReducer = (state = { customLevelsModule }, action) => {
 
   switch (action.type) {
     case CUSTOM_LEVELS_REQUEST:

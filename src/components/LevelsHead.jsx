@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import models from '../models';
+import { connect } from 'react-redux';
+import { fetchLevels } from '../store/actions';
 
-const LevelsHead = () => {
+const LevelsHead = ({ fetchLevels }) => {
 
   const [level, updateLevel] = useState(models.levelParams);
 
@@ -12,7 +14,7 @@ const LevelsHead = () => {
 
   const update = async (e) => {
     e.preventDefault();
-    updateLevel(models.levelParams);
+    fetchLevels(level);
     return;
   }
 
@@ -21,12 +23,21 @@ const LevelsHead = () => {
       <form>
         <div className="levels__row">
          <div className="levels__select-wrapper">
-            <input value={`${level.timeframe?level.timeframe+'m':''}`} readOnly placeholder="timeframe" className="levels__input levels__input--like-select"/>
+            <input value={level.timeframe} readOnly placeholder="timeframe" className="levels__input levels__input--like-select"/>
             <select onChange={handleChange('timeframe')} placeholder="timeframe" className="levels__select" value={level.timeframe}>
               <option value="" className='levels__disabled-option'>timeframe</option>
-              <option value="1">1m</option>
-              <option value="5">5m</option>
-              <option value="15">15m</option>
+              <option value="1m">1m</option>
+              <option value="5m">5m</option>
+              <option value="15m">15m</option>
+              <option value="30m">30m</option>
+              <option value="1h">1h</option>
+              <option value="3h">3h</option>
+              <option value="6h">6h</option>
+              <option value="12h">12h</option>
+              <option value="1d">1d</option>
+              <option value="1w">1w</option>
+              <option value="2w">2w</option>
+              <option value="1m">1m</option>
             </select>
          </div>
           <input onChange={handleChange('candles')} value={level.candles} type="number" placeholder="candles" className="levels__input "/>
@@ -42,4 +53,7 @@ const LevelsHead = () => {
   )
 };
 
-export default LevelsHead;
+export default connect(
+  null,
+  { fetchLevels }
+)(LevelsHead);

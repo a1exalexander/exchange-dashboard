@@ -25,7 +25,7 @@ const url = {
   parameters: `${ROOT_URL}/bitmex/parameters`,
   thresholds: `${ROOT_URL}/bitmex/thresholds`,
   funding: `${ROOT_URL}/bitmex/funding`,
-  chart: `${ROOT_URL}/bitmex/levels/`,
+  levels: `${ROOT_URL}/bitmex/levels/`,
 }
 
 export { WESOCKET_ROOT };

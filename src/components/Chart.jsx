@@ -71,4 +71,4 @@ const Chart = ({ chart }) => {
   );
 };
 
-export default connect(({ chartModule: { chart = [] } = {} }) => ({ chart }))(Chart);
+export default connect(({ levelsModule: { chart = [] } = {} }) => ({ chart }))(Chart);

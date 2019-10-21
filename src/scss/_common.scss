@@ -30,3 +30,34 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance:textfield;
 }
+
+@-webkit-keyframes fadeIn {
+  from {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+  animation-duration: 0.2s;
+  animation-timing-function: ease;
+}

@@ -1,9 +1,10 @@
-.levels {
+$style: levels;
+.#{$style} {
   padding: 16px 0;
   &__head {
     @include flex-row;
     max-width: 30%;
-    margin-bottom: 12px;
+    margin-bottom: 24px;
   }
   &__title {
     line-height: 1;
@@ -38,6 +39,44 @@
       z-index: 1;
       pointer-events: none;
     }
+  }
+  &__distance-list {
+    @include flex-row(flex-start, stretch);
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  &__remove-btn {
+    visibility: hidden;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    top: -18px;
+    &:hover {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+  &__distance-item-box {
+    position: relative;
+    width: fit-content;
+    @include flex-col(flex-start, center);
+    @include media {
+      &:hover {
+        .#{$style}__remove-btn {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+  }
+  &__distance-item {
+    padding: 0 16px;
+    flex: 1 1 20%;
+    min-width: 120px;
+    max-width: 33.3%;
+    @include flex-col(flex-start, center);
+    margin-bottom: 20px;
+    position: relative;
   }
   &__inner {
     @include flex-row(stretch, stretch);

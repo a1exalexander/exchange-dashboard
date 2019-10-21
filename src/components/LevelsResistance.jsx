@@ -2,13 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   thresholdsUpdateAlert,
-  thresholdsUpdateAlertRequest
+  thresholdsUpdateAlertRequest,
+  removeResistanceLevel
 } from '../store/actions';
+import { getDistanceLevels } from '../store/getters';
+import RemoveButton from './common/buttons/RemoveButton';
 
 const LevelsResistance = ({
   thresholds,
   thresholdsUpdateAlert,
-  thresholdsUpdateAlertRequest
+  thresholdsUpdateAlertRequest,
+  removeResistanceLevel,
+  levels = []
 }) => {
   const handleChange = e => {
     const { value } = e.target;
@@ -26,12 +31,27 @@ const LevelsResistance = ({
     }
   };
 
+  const levelsList = levels.map(({ idx, price, distance }) => {
+    return (
+      <li className="levels__distance-item fadeIn" key={idx}>
+        <div className="levels__distance-item-box">
+          <span className="levels__value">{price}</span>
+          <span className="levels__value">{distance}%</span>
+          <RemoveButton
+            className="levels__remove-btn"
+            onClick={() => removeResistanceLevel(idx)}
+          />
+        </div>
+      </li>
+    );
+  });
+
   return (
     <div className="levels">
       <div className="levels__head">
         <h3 className="levels__title">Resistance</h3>
         <input
-          id='resistance'
+          id="resistance"
           onChange={handleChange}
           onKeyUp={handleEnter}
           onBlur={updateValue}
@@ -41,29 +61,17 @@ const LevelsResistance = ({
           className="levels__input"
         />
       </div>
-      <div className="levels__inner">
-        <div className="levels__col">
-          <span className="levels__value">{'8700'}</span>
-          <span className="levels__value">{'-4.34'}%</span>
-        </div>
-        <div className="levels__col">
-          <span className="levels__value">{'8700'}</span>
-          <span className="levels__value">{'-4.34'}%</span>
-        </div>
-        <div className="levels__col">
-          <span className="levels__value">{'8700'}</span>
-          <span className="levels__value">{'-4.34'}%</span>
-        </div>
-        <div className="levels__col">
-          <span className="levels__value">{'8700'}</span>
-          <span className="levels__value">{'-4.34'}%</span>
-        </div>
-      </div>
+      <ul className="levels__distance-list">{levelsList}</ul>
     </div>
   );
 };
 
 export default connect(
-  ({ thresholdsModule: thresholds }) => ({ thresholds }),
-  { thresholdsUpdateAlert, thresholdsUpdateAlertRequest }
+  store => {
+    return {
+      thresholds: store.thresholdsModule,
+      levels: getDistanceLevels(store)(store.levelsModule.resistance)
+    };
+  },
+  { thresholdsUpdateAlert, thresholdsUpdateAlertRequest, removeResistanceLevel }
 )(LevelsResistance);

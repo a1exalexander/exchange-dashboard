@@ -5,15 +5,13 @@ import {
   PARAMETERS_UPDATE
 } from '../../constants';
 
-const parametersReducer = (state, action) => {
+const parametersModule = {
+  loading: false,
+  hasError: false,
+  parameters: [],
+};
 
-  if (state === undefined) {
-    return {
-      loading: false,
-      hasError: false,
-      parameters: [],
-    };
-  }
+const parametersReducer = (state = { parametersModule }, action) => {
 
   switch (action.type) {
     case PARAMETERS_REQUEST:

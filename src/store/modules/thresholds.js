@@ -6,21 +6,19 @@ import {
   THRESHOLDS_UPDATE_ALERT
 } from '../../constants';
 
-const thresholdsReducer = (state, action) => {
+const thresholdsModule = {
+  loading: false,
+  hasError: false,
+  thresholds: [],
+  volume_1m: '',
+  volume_5m: '',
+  volume_1h: '',
+  volume_1d: '',
+  resistance: '',
+  support: '',
+};
 
-  if (state === undefined) {
-    return {
-      loading: false,
-      hasError: false,
-      thresholds: [],
-      volume_1m: '',
-      volume_5m: '',
-      volume_1h: '',
-      volume_1d: '',
-      resistance: '',
-      support: '',
-    };
-  }
+const thresholdsReducer = (state = { thresholdsModule }, action) => {
 
   switch (action.type) {
     case THRESHOLDS_REQUEST:

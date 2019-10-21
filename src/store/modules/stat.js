@@ -6,15 +6,13 @@ import {
   STAT_UPDATE
 } from '../../constants';
 
-const statReducer = (state, action) => {
+const statModule = {
+  loading: false,
+  hasError: false,
+  stat: {...models.stat}
+};
 
-  if (state === undefined) {
-    return {
-      loading: false,
-      hasError: false,
-      stat: {...models.stat}
-    };
-  }
+const statReducer = (state = { statModule }, action) => {
 
   switch (action.type) {
     case STAT_REQUEST:

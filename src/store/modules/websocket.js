@@ -3,13 +3,11 @@ import {
   WS_DISCONNECTED
 } from '../../constants';
 
-const websocketReducer = (state, action) => {
+const websocketModule = {
+  connected: false,
+};
 
-  if (state === undefined) {
-    return {
-      connected: false,
-    };
-  }
+const websocketReducer = (state = { websocketModule }, action) => {
 
   switch (action.type) {
     case WS_CONNECTED:

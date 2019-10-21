@@ -4,10 +4,6 @@ import {
   WS_CONNECTED,
   WS_DISCONNECT,
   WS_DISCONNECTED,
-  CHART_UPDATE,
-  CHART_REQUEST,
-  CHART_SUCCESS,
-  CHART_FAILURE,
   PARAMETERS_FAILURE,
   PARAMETERS_SUCCESS,
   PARAMETERS_UPDATE,
@@ -25,6 +21,10 @@ import {
   STAT_SUCCESS,
   STAT_FAILURE,
   THRESHOLDS_UPDATE_ALERT,
+  LEVELS_REQUEST,
+  LEVELS_UPDATE,
+  LEVELS_SUCCESS,
+  LEVELS_FAILURE,
 } from '../constants';
 import HttpService from '../services/httpService';
 import { WESOCKET_ROOT } from '../api';
@@ -117,12 +117,13 @@ export const fetchThresholds = () => async dispatch => {
     dispatch(THRESHOLDS_FAILURE);
   }
 };
-export const fetchChart = () => async dispatch => {
-  const formData = { candles: 200, timeframe: "1h" };
-  dispatch(CHART_REQUEST);
+
+export const fetchLevels = (params = {}) => async dispatch => {
+  const formData = { candles: 200, timeframe: "1h", ...params };
+  dispatch(LEVELS_REQUEST);
   try {
-    const { candles } = await httpService.fetchChart(formData);
-    const payload = candles.map((x) => {
+    const { candles = [], support = [], resistance = [] } = await httpService.fetchLevels(formData);
+    const chart = candles.map((x) => {
       return {
         t: x.Timestamp,
         o: x.Open,
@@ -131,11 +132,25 @@ export const fetchChart = () => async dispatch => {
         c: x.Close
       };
     })
-    dispatch([CHART_UPDATE, payload]);
-    dispatch(CHART_SUCCESS);
+    dispatch([LEVELS_UPDATE, { chart, support, resistance }]);
+    dispatch(LEVELS_SUCCESS);
   } catch (e) {
-    dispatch(CHART_FAILURE);
+    dispatch(LEVELS_FAILURE);
   }
+};
+
+export const removeLevel = (idx, type) => async (dispatch, getState) => {
+  const shallowCopy = [...getState().levelsModule[type]];
+  shallowCopy.splice(idx, 1);
+  dispatch([LEVELS_UPDATE, { [type]: shallowCopy }]);
+};
+
+export const removeResistanceLevel = (idx) => async (dispatch, getState) => {
+  removeLevel(idx, 'resistance')(dispatch, getState);
+};
+
+export const removeSupportLevel = (idx) => async (dispatch, getState) => {
+  removeLevel(idx, 'resistance')(dispatch, getState);
 };
 
 export const customLevelAdd = (newLevel) => async (dispatch, getState) => {
@@ -190,7 +205,7 @@ export const fetchData = () => (dispatch) => {
   fetchParameters()(dispatch);
   fetchFunding()(dispatch);
   fetchThresholds()(dispatch);
-  fetchChart()(dispatch);
+  fetchLevels()(dispatch);
 }
 
 export const changeTrades = (trades) => async dispatch => {

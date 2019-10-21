@@ -12,6 +12,7 @@ const Chart = ({ chart }) => {
   })
 
   const options = {
+    maintainAspectRatio: true,
     responsive: true,
     legend: {
       display: false
@@ -26,11 +27,11 @@ const Chart = ({ chart }) => {
     plugins: {
       zoom: {
         pan: {
-          enabled: false,
-          mode: 'xy',
+          enabled: true,
+          mode: 'x',
         },
         zoom: {
-          enabled: true,
+          enabled: false,
           drag: true,
           mode: 'x',
           speed: 0.1,
@@ -65,7 +66,9 @@ const Chart = ({ chart }) => {
     updateDataChart({ datasets: [ { ...dataChart.datasets[0], label: "Exhcange", data: [...chart] } ] })
   }, [chart])
 
-  return <ChartComponent type='ohlc' data={dataChart} options={options} />;
+  return (
+    <ChartComponent fer={(reference) => this.chartReference = reference } type='ohlc' data={dataChart} options={options} />
+  );
 };
 
 export default connect(({ chartModule: { chart = [] } = {} }) => ({ chart }))(Chart);

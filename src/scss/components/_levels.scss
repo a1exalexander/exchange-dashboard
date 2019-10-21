@@ -1,9 +1,8 @@
 .levels {
   padding: 16px 0;
-  max-width: 80%;
   &__head {
     @include flex-row;
-    max-width: 50%;
+    max-width: 30%;
     margin-bottom: 12px;
   }
   &__title {
@@ -24,8 +23,9 @@
   }
   &__input {
     @extend %input;
+    width: 130px;
     &--custom {
-      max-width: 90px;
+      max-width: 100px;
       margin-right: 16px;
     }
     &--mr {

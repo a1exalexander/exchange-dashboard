@@ -28,7 +28,6 @@ import {
 } from '../constants';
 import HttpService from '../services/httpService';
 import { WESOCKET_ROOT } from '../api';
-import moment from 'moment';
 
 const httpService = new HttpService();
 

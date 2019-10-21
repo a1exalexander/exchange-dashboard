@@ -29,7 +29,7 @@ const socketMiddleware = () => {
 
   const onMessage = store => (e) => {
     const payload = JSON.parse(e.data);
-    // logger.info(payload, 'WEBSOCKET MESSAGE');
+    logger.info(payload, 'WEBSOCKET MESSAGE');
     switch (payload.type) {
       case 'trade':
         store.dispatch([STAT_UPDATE, { 'price': payload['price']  }]);

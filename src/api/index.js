@@ -1,13 +1,15 @@
 import logger from '../services/logger';
 
+const tempUrl = 'c5d0ace2.ngrok.io';
+
 const apiType = {
   prod: 'http://0.0.0.0:5000',
-  test: 'http://083ef843.ngrok.io',
+  test: `http://${tempUrl}`,
 };
 
 const socketType = {
   prod: 'ws://0.0.0.0:5000/ws/ticks/',
-  test: 'ws://083ef843.ngrok.io/ws/ticks/',
+  test: `ws://${tempUrl}/ws/ticks/`,
 };
 
 const API_MODE = process.env.REACT_APP_API;
@@ -23,7 +25,7 @@ const url = {
   parameters: `${ROOT_URL}/bitmex/parameters`,
   thresholds: `${ROOT_URL}/bitmex/thresholds`,
   funding: `${ROOT_URL}/bitmex/funding`,
-  chart: `${ROOT_URL}/`,
+  chart: `${ROOT_URL}/bitmex/levels/`,
 }
 
 export { WESOCKET_ROOT };

@@ -2,10 +2,10 @@ import { chartReducer, parametersReducer, thresholdsReducer, customLevelsReducer
 
 const reducer = (state, action) => {
   return {
+    chartModule: chartReducer(state, action),
     parametersModule: parametersReducer(state, action),
     customLevelsModule: customLevelsReducer(state, action),
     thresholdsModule: thresholdsReducer(state, action),
-    chartModule: chartReducer(state, action),
     statModule: statReducer(state, action),
     websocketModule: websocketReducer(state, action),
   };

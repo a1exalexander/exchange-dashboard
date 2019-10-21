@@ -28,6 +28,7 @@ import {
 } from '../constants';
 import HttpService from '../services/httpService';
 import { WESOCKET_ROOT } from '../api';
+import moment from 'moment';
 
 const httpService = new HttpService();
 
@@ -117,11 +118,20 @@ export const fetchThresholds = () => async dispatch => {
     dispatch(THRESHOLDS_FAILURE);
   }
 };
-
 export const fetchChart = () => async dispatch => {
+  const formData = { candles: 200, timeframe: "1h" };
   dispatch(CHART_REQUEST);
   try {
-    const payload = await httpService.fetchChart();
+    const { candles } = await httpService.fetchChart(formData);
+    const payload = candles.map((x) => {
+      return {
+        t: x.Timestamp,
+        o: x.Open,
+        h: x.High,
+        l: x.Low,
+        c: x.Close
+      };
+    })
     dispatch([CHART_UPDATE, payload]);
     dispatch(CHART_SUCCESS);
   } catch (e) {
@@ -181,6 +191,7 @@ export const fetchData = () => (dispatch) => {
   fetchParameters()(dispatch);
   fetchFunding()(dispatch);
   fetchThresholds()(dispatch);
+  fetchChart()(dispatch);
 }
 
 export const changeTrades = (trades) => async dispatch => {

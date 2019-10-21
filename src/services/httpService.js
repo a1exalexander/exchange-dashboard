@@ -63,9 +63,9 @@ class HttpService {
       return;
     }
   };
-  fetchChart = async () => {
+  fetchChart = async (params) => {
     try {
-      const { data } = await axios.get(url.chart);
+      const { data } = await axios.post(url.chart, params);
       return data;
     } catch (e) {
       throw e;

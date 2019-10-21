@@ -8,7 +8,7 @@ const LevelsHead = ({ fetchLevels }) => {
   const [level, updateLevel] = useState(models.levelParams);
 
   const handleChange = (type) => (e) => {
-    const { value } = e.target;
+    const value = type === 'candles' ? Number(e.target.value) : e.target.value;
     updateLevel({ ...level, [type]: value });
   }
 

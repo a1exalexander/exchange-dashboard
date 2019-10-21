@@ -150,7 +150,7 @@ export const removeResistanceLevel = (idx) => async (dispatch, getState) => {
 };
 
 export const removeSupportLevel = (idx) => async (dispatch, getState) => {
-  removeLevel(idx, 'resistance')(dispatch, getState);
+  removeLevel(idx, 'support')(dispatch, getState);
 };
 
 export const customLevelAdd = (newLevel) => async (dispatch, getState) => {

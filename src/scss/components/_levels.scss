@@ -71,12 +71,32 @@ $style: levels;
   }
   &__distance-item {
     padding: 0 16px;
-    flex: 1 1 20%;
+    flex: 0 1 50%;
     min-width: 120px;
-    max-width: 33.3%;
     @include flex-col(flex-start, center);
     margin-bottom: 20px;
     position: relative;
+    @include media($screen-iphone-plus) {
+      flex-basis: 33.3%;
+    }
+    @include media(520px) {
+      flex-basis: 25%;
+    }
+    @include media(680px) {
+      flex-basis: 20%;
+    }
+    @include media($screen-desktop) {
+      flex-basis: 16.6%;
+    }
+    @include media($screen-hd) {
+      flex-basis: 14.2%;
+    }
+    @include media($screen-fullhd) {
+      flex-basis: 12.5%;
+    }
+    @include media($screen-retina) {
+      flex-basis: 10%;
+    }
   }
   &__inner {
     @include flex-row(stretch, stretch);

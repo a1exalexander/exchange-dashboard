@@ -48,7 +48,7 @@ class HttpService {
   };
   thresholdsAlertsUpdate = async (payload) => {
     try {
-      await axios.put(`${url.thresholds}/${payload.id}`, payload);
+      await axios.put(`${url.thresholds}/${payload.id}/`, payload);
       return;
     } catch (e) {
       throw e;

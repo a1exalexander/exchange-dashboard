@@ -45,28 +45,28 @@ $style: levels;
     flex-wrap: wrap;
     width: 100%;
   }
-  &__remove-btn {
-    visibility: hidden;
-    opacity: 0;
+  &__checkbox {
+    // visibility: hidden;
+    // opacity: 0;
     cursor: pointer;
     position: absolute;
-    top: -18px;
-    &:hover {
-      visibility: visible;
-      opacity: 1;
-    }
+    top: -12px;
+    // &:hover, &:not(:checked) {
+    //   visibility: visible;
+    //   opacity: 1;
+    // }
   }
   &__distance-item-box {
     position: relative;
     width: fit-content;
     @include flex-col(flex-start, center);
     @include media {
-      &:hover {
-        .#{$style}__remove-btn {
-          visibility: visible;
-          opacity: 1;
-        }
-      }
+      // &:hover {
+      //   .#{$style}__checkbox {
+      //     visibility: visible;
+      //     opacity: 1;
+      //   }
+      // }
     }
   }
   &__distance-item {

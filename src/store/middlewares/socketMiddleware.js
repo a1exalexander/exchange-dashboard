@@ -1,4 +1,11 @@
-import { WS_CONNECT, WS_DISCONNECTED, WS_DISCONNECT, WS_ERROR, WS_CONNECTED, STAT_UPDATE } from '../../constants';
+import {
+  WS_CONNECT,
+  WS_DISCONNECTED,
+  WS_DISCONNECT,
+  WS_ERROR,
+  WS_CONNECTED,
+  STAT_UPDATE
+} from '../../constants';
 import logger from '../../services/logger';
 import { WESOCKET_ROOT } from '../../api';
 
@@ -6,60 +13,88 @@ const socketMiddleware = () => {
   let socket = null;
   let originalSend = null;
 
-  const onOpen = store => (e) => {
-    logger.info({type: e.type, url: e.target.url}, 'WEBSOCKET OPEN');
+  const onOpen = store => e => {
+    logger.info({ type: e.type, url: e.target.url }, 'WEBSOCKET OPEN');
     store.dispatch(WS_CONNECTED);
   };
 
-  const onClose = store => (e) => {
-    logger.info({type: e.type, url: e.target.url}, 'WEBSOCKET DISCONECTED');
+  const onClose = store => e => {
+    logger.info({ type: e.type, url: e.target.url }, 'WEBSOCKET DISCONECTED');
     store.dispatch(WS_DISCONNECTED);
   };
 
-  const onError = store => (e) => {
-    logger.info({type: e.type, url: e.target.url}, 'WEBSOCKET ERROR');
+  const onError = store => e => {
+    logger.info({ type: e.type, url: e.target.url }, 'WEBSOCKET ERROR');
     store.dispatch(WS_ERROR);
   };
 
   const onSend = (...args) => {
     logger.info(args, 'WEBSOCKET SEND');
-    return originalSend.apply(socket, args)
+    return originalSend.apply(socket, args);
   };
 
-
-  const onMessage = store => (e) => {
+  const onMessage = store => e => {
     const payload = JSON.parse(e.data);
     logger.info(payload, 'WEBSOCKET MESSAGE');
     switch (payload.type) {
       case 'trade':
-        store.dispatch([STAT_UPDATE, { 'price': payload['price']  }]);
+        store.dispatch([STAT_UPDATE, { price: payload['price'] }]);
         break;
       case 'trade_volume_XBTUSD':
-        store.dispatch([STAT_UPDATE, { 'volume_of_last': payload['trade_volume']  }]);
+        store.dispatch([
+          STAT_UPDATE,
+          { volume_of_last: payload['trade_volume'] }
+        ]);
         break;
       case 'volume1m':
-        store.dispatch([STAT_UPDATE, { 'volume_change_1m': payload['volume1m']  }]);
+        store.dispatch([
+          STAT_UPDATE,
+          {
+            volume1m_change: payload['volume1m_change'],
+            volume1m_change_percent: payload['volume1m_change_percent']
+          }
+        ]);
         break;
       case 'volume5m':
-        store.dispatch([STAT_UPDATE, { 'volume_change_5m': payload['volume5m']  }]);
+        store.dispatch([
+          STAT_UPDATE,
+          {
+            volume5m_change: payload['volume5m_change'],
+            volume5m_change_percent: payload['volume5m_change_percent']
+          }
+        ]);
         break;
       case 'volume1h':
-        store.dispatch([STAT_UPDATE, { 'volume_change_1h': payload['volume5h']  }]);
+        store.dispatch([
+          STAT_UPDATE,
+          {
+            volume1h_change: payload['volume1h_change'],
+            volume1h_change_percent: payload['volume1h_change_percent']
+          }
+        ]);
         break;
       case 'volume1d':
-        store.dispatch([STAT_UPDATE, { 'volume_change_1d': payload['volume5d']  }]);
+        store.dispatch([
+          STAT_UPDATE,
+          {
+            volume1d_change: payload['volume1d_change'],
+            volume1d_change_percent: payload['volume1d_change_percent']
+          }
+        ]);
         break;
       case 'instrument':
-        store.dispatch([STAT_UPDATE, { 'open_inerest': payload['open_interest']  }]);
+        store.dispatch([
+          STAT_UPDATE,
+          { open_inerest: payload['open_interest'] }
+        ]);
         break;
       default:
         break;
     }
-  }
+  };
 
-  return (store) => (next) => (action) => {
+  return store => next => action => {
     switch (action.type) {
-
       case WS_CONNECT:
         if (socket !== null) {
           socket.close();
@@ -73,29 +108,43 @@ const socketMiddleware = () => {
         socket.onerror = onError(store);
         socket.onmessage = onMessage(store);
         break;
-        
+
       case WS_CONNECTED:
-        socket.send(JSON.stringify({
-          subscribe: "XBTUSD"
-        }));
-        socket.send(JSON.stringify({
-            subscribe: "trade_volume_XBTUSD"
-        }));
-        socket.send(JSON.stringify({
-            subscribe: "volume1m_XBTUSD"
-        }));
-        socket.send(JSON.stringify({
-            subscribe: "volume5m_XBTUSD"
-        }));
-        socket.send(JSON.stringify({
-          subscribe: "volume1h_XBTUSD"
-        }));
-        socket.send(JSON.stringify({
-          subscribe: "volume1d_XBTUSD"
-        }));
-        socket.send(JSON.stringify({
-            subscribe: "instrument_XBTUSD"
-        }))
+        socket.send(
+          JSON.stringify({
+            subscribe: 'XBTUSD'
+          })
+        );
+        socket.send(
+          JSON.stringify({
+            subscribe: 'trade_volume_XBTUSD'
+          })
+        );
+        socket.send(
+          JSON.stringify({
+            subscribe: 'volume1m_XBTUSD'
+          })
+        );
+        socket.send(
+          JSON.stringify({
+            subscribe: 'volume5m_XBTUSD'
+          })
+        );
+        socket.send(
+          JSON.stringify({
+            subscribe: 'volume1h_XBTUSD'
+          })
+        );
+        socket.send(
+          JSON.stringify({
+            subscribe: 'volume1d_XBTUSD'
+          })
+        );
+        socket.send(
+          JSON.stringify({
+            subscribe: 'instrument_XBTUSD'
+          })
+        );
         break;
 
       case WS_DISCONNECT:

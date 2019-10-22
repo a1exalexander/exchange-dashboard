@@ -4,14 +4,15 @@ import ChartComponent from "react-chartjs-2";
 import 'chartjs-chart-financial';
 import "chartjs-plugin-annotation";
 import 'chartjs-plugin-zoom';
+import { getAnnotations } from '../store/getters';
 
-const Chart = ({ chart }) => {
+const Chart = ({ chart, annotations }) => {
 
   const [dataChart, updateDataChart] = useState({
     datasets: [{ label: "Exhcange", data: [] }]
   })
 
-  const options = {
+  const [options, updateOptions] = useState({
     maintainAspectRatio: true,
     responsive: true,
     legend: {
@@ -39,36 +40,27 @@ const Chart = ({ chart }) => {
       },
     },
     annotation: {
-      annotations: [
-        {
-          drawTime: "afterDraw",
-          borderColor: "black",
-          borderWidth: 2,
-          mode: "horizontal",
-          type: "line",
-          value: 8360,
-          scaleID: "y-axis-0",
-        },
-        {
-          drawTime: "afterDraw",
-          borderColor: "green",
-          borderWidth: 2,
-          mode: "horizontal",
-          type: "line",
-          value: 7930,
-          scaleID: "y-axis-0",
-        }
-      ]
+      annotations: []
     }
-  };
+  })
 
   useEffect(() => {
-    updateDataChart({ datasets: [ { ...dataChart.datasets[0], label: "Exhcange", data: [...chart] } ] })
+    updateDataChart({ datasets: [ { ...dataChart.datasets[0], label: "Exhcange", data: [...chart] } ] });
   }, [chart])
 
+  useEffect(() => {
+    updateOptions({ ...options, annotation: { annotations }});
+  }, [annotations])
+
   return (
-    <ChartComponent fer={(reference) => this.chartReference = reference } type='ohlc' data={dataChart} options={options} />
+    <ChartComponent type='ohlc' data={dataChart} options={options} />
   );
 };
 
-export default connect(({ levelsModule: { chart = [] } = {} }) => ({ chart }))(Chart);
+export default connect(
+  (store) => ({
+    levelsModule: store.levelsModule,
+    chart: store.levelsModule.chart,
+    annotations: getAnnotations(store),
+  }),
+)(Chart);

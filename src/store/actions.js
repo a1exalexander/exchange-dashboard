@@ -132,7 +132,9 @@ export const fetchLevels = (params = {}) => async dispatch => {
         c: x.Close
       };
     })
-    dispatch([LEVELS_UPDATE, { chart, support, resistance }]);
+    const supportCopy = support.map((price, idx) => ({idx, price, chartLine: true, distance: ''}));
+    const resistanceCopy = resistance.map((price, idx) => ({idx, price, chartLine: true, distance: ''}));
+    dispatch([LEVELS_UPDATE, { chart, support: supportCopy, resistance: resistanceCopy }]);
     dispatch(LEVELS_SUCCESS);
   } catch (e) {
     dispatch(LEVELS_FAILURE);
@@ -151,6 +153,21 @@ export const removeResistanceLevel = (idx) => async (dispatch, getState) => {
 
 export const removeSupportLevel = (idx) => async (dispatch, getState) => {
   removeLevel(idx, 'support')(dispatch, getState);
+};
+
+export const toggleChartLine = (idx, type) => (dispatch, getState) => {
+  const shallowCopy = [...getState().levelsModule[type]];
+  const level = {...shallowCopy[idx]};
+  shallowCopy.splice(idx, 1, {...level, chartLine: !level.chartLine});
+  dispatch([LEVELS_UPDATE, { [type]: shallowCopy }]);
+}
+
+export const toggleResistanceLine = (idx) => async (dispatch, getState) => {
+  toggleChartLine(idx, 'resistance')(dispatch, getState);
+};
+
+export const toggleSupportLine = (idx) => async (dispatch, getState) => {
+  toggleChartLine(idx, 'support')(dispatch, getState);
 };
 
 export const customLevelAdd = (newLevel) => async (dispatch, getState) => {

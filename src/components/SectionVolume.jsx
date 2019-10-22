@@ -1,33 +1,45 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { thresholdsUpdateAlert, thresholdsUpdateAlertRequest } from '../store/actions';
+import {
+  thresholdsUpdateAlert,
+  thresholdsUpdateAlertRequest
+} from '../store/actions';
+import { formatVolume } from '../utils/format';
 
-const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert, thresholdsUpdateAlertRequest }) => {
-  
+const SectionVolume = ({
+  stat,
+  thresholds,
+  thresholdsUpdateAlert,
+  thresholdsUpdateAlertRequest
+}) => {
   const types = [
     ['volume_1m', '1m'],
     ['volume_5m', '5m'],
     ['volume_1h', '1h'],
-    ['volume_1d', '1d'],
+    ['volume_1d', '1d']
   ];
 
-  const handleChange = (idx) => e => {
+  const handleChange = idx => e => {
     const { value } = e.target;
-    const { [idx]: { 0: type, 1: period },  } = types;
+    const {
+      [idx]: { 0: type, 1: period }
+    } = types;
     thresholdsUpdateAlert({ type, value }, period);
   };
 
-  const updateValue = (idx) => (e) => {
-    if (e) e.preventDefault()
-    const { [idx]: { 0: type, 1: period },  } = types;
+  const updateValue = idx => e => {
+    if (e) e.preventDefault();
+    const {
+      [idx]: { 0: type, 1: period }
+    } = types;
     thresholdsUpdateAlertRequest(type, period);
   };
 
-  const handleEnter = (idx) => (e) => {
+  const handleEnter = idx => e => {
     if (e.key === 'Enter') {
       document.getElementById(types[idx][0]).blur();
     }
-  }
+  };
 
   return (
     <div className="section">
@@ -48,7 +60,9 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert, thresholdsUpda
               className="section__input section__input--level"
             />
           </div>
-          <span className="section__value">{stat.volume_change_1m}</span>
+          <span className="section__value">
+            {formatVolume(stat.volume1m_change, stat.volume1m_change_percent)}
+          </span>
         </li>
         <li className="section__item">
           <div className="section__wrapper">
@@ -66,7 +80,7 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert, thresholdsUpda
               className="section__input section__input--level"
             />
           </div>
-          <span className="section__value">{stat.volume_change_5m}</span>
+          <span className="section__value">{formatVolume(stat.volume5m_change, stat.volume5m_change_percent)}</span>
         </li>
         <li className="section__item">
           <div className="section__wrapper">
@@ -84,7 +98,7 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert, thresholdsUpda
               className="section__input section__input--level"
             />
           </div>
-          <span className="section__value">{stat.volume_change_1h}</span>
+          <span className="section__value">{formatVolume(stat.volume1h_change, stat.volume1h_change_percent)}</span>
         </li>
         <li className="section__item">
           <div className="section__wrapper">
@@ -102,7 +116,7 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert, thresholdsUpda
               className="section__input section__input--level"
             />
           </div>
-          <span className="section__value">{stat.volume_change_1d}</span>
+          <span className="section__value">{formatVolume(stat.volume1d_change, stat.volume1d_change_percent)}</span>
         </li>
       </ul>
     </div>
@@ -110,6 +124,9 @@ const SectionVolume = ({ stat, thresholds, thresholdsUpdateAlert, thresholdsUpda
 };
 
 export default connect(
-  ({ thresholdsModule: thresholds, statModule: { stat } }) => ({ thresholds, stat }),
+  ({ thresholdsModule: thresholds, statModule: { stat } }) => ({
+    thresholds,
+    stat
+  }),
   { thresholdsUpdateAlert, thresholdsUpdateAlertRequest }
 )(SectionVolume);

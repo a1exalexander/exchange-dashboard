@@ -1,0 +1,5 @@
+.checkbox {
+  display: flex;
+  @include flex-row(center, center);
+  padding: 4px;
+}

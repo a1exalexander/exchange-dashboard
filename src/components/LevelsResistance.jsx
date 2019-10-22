@@ -3,16 +3,17 @@ import { connect } from 'react-redux';
 import {
   thresholdsUpdateAlert,
   thresholdsUpdateAlertRequest,
-  removeResistanceLevel
+  toggleResistanceLine,
 } from '../store/actions';
 import { getDistanceLevels } from '../store/getters';
-import RemoveButton from './common/buttons/RemoveButton';
+import Checkbox from './common/form/Checkbox';
+import { formatNumber } from '../utils/format';
 
 const LevelsResistance = ({
   thresholds,
   thresholdsUpdateAlert,
   thresholdsUpdateAlertRequest,
-  removeResistanceLevel,
+  toggleResistanceLine,
   levels = []
 }) => {
   const handleChange = e => {
@@ -31,16 +32,13 @@ const LevelsResistance = ({
     }
   };
 
-  const levelsList = levels.map(({ idx, price, distance }) => {
+  const levelsList = levels.map(({ idx, price, distance, chartLine }) => {
     return (
       <li className="levels__distance-item fadeIn" key={idx}>
         <div className="levels__distance-item-box">
-          <span className="levels__value">{price}</span>
+          <span className="levels__value">{formatNumber(price)}</span>
           <span className="levels__value">{distance}%</span>
-          <RemoveButton
-            className="levels__remove-btn"
-            onClick={() => removeResistanceLevel(idx)}
-          />
+          <Checkbox className="levels__checkbox" onChange={() => toggleResistanceLine(idx)} checked={chartLine}/>
         </div>
       </li>
     );
@@ -73,5 +71,5 @@ export default connect(
       levels: getDistanceLevels(store)(store.levelsModule.resistance)
     };
   },
-  { thresholdsUpdateAlert, thresholdsUpdateAlertRequest, removeResistanceLevel }
+  { toggleResistanceLine, thresholdsUpdateAlert, thresholdsUpdateAlertRequest }
 )(LevelsResistance);

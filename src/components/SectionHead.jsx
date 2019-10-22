@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchParametersUpdate, parametersUpdate } from '../store/actions';
+import { formatNumber } from '../utils/format';
 
 const SectionHead = ({ stat, fetchParametersUpdate, parametersUpdate }) => {
 
@@ -25,7 +26,7 @@ const SectionHead = ({ stat, fetchParametersUpdate, parametersUpdate }) => {
       <ul className="section__list">
         <li className="section__item">
           <span className="section__value">Price</span>
-          <span className="section__value">{stat.price} USD</span>
+          <span className="section__value">{formatNumber(stat.price)} USD</span>
         </li>
         <li className="section__item">
           <div className="section__wrapper">
@@ -41,11 +42,11 @@ const SectionHead = ({ stat, fetchParametersUpdate, parametersUpdate }) => {
             />
             <span className="section__value">trades</span>
           </div>
-          <span className="section__value">{stat.volume_of_last} USD</span>
+          <span className="section__value">{formatNumber(stat.volume_of_last)} USD</span>
         </li>
         <li className="section__item">
           <span className="section__value">Open Interest</span>
-          <span className="section__value">{stat.open_inerest} USD</span>
+          <span className="section__value">{formatNumber(stat.open_inerest)} USD</span>
         </li>
       </ul>
     </div>

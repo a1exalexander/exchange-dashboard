@@ -50,15 +50,15 @@ const LevelsHead = ({ fetchLevels }) => {
         <div className="levels__row">
           <div className='levels__input-wrapper'>
             <label className="levels__label" htmlFor="min_touches">Min touches</label>
-            <input id='min_touches' onChange={handleChange('minTouches')} value={level.minTouches} type="number" placeholder="min touches" className="levels__input levels__input--mr"/>
+            <input id='min_touches' onChange={handleChange('minTouches')} value={level.minTouches} type="number" placeholder="min touches" className="levels__input"/>
           </div>
           <div className='levels__input-wrapper'>
             <label className="levels__label" htmlFor="likeliness">Likeliness percent</label>
-            <input id='likeliness' onChange={handleChange('likelinessPercent')} value={level.likelinessPercent} type="number" placeholder="likeliness percent" className="levels__input levels__input--mr"/>
+            <input id='likeliness' onChange={handleChange('likelinessPercent')} value={level.likelinessPercent} type="number" placeholder="likeliness percent" className="levels__input"/>
           </div>
           <div className='levels__input-wrapper'>
             <label className="levels__label" htmlFor="bounce">Bounce percent</label>
-            <input id='bounce' onChange={handleChange('bouncePercent')} value={level.bouncePercent} type="number" placeholder="bounce percent" className="levels__input levels__input--mr"/>
+            <input id='bounce' onChange={handleChange('bouncePercent')} value={level.bouncePercent} type="number" placeholder="bounce percent" className="levels__input"/>
           </div>
           <button onClick={update} className="levels__submit" type="submit">update</button>
         </div>

@@ -58,6 +58,7 @@ $style: levels;
   }
   &__input-wrapper {
     @include flex-col;
+    margin-right: 16px;
   }
   &__label {
     display: block;

@@ -46,6 +46,7 @@ const Chart = ({ chart, annotations }) => {
 
   useEffect(() => {
     updateDataChart({ datasets: [ { ...dataChart.datasets[0], label: "Exhcange", data: [...chart] } ] });
+    updateOptions({ ...options, annotation: { annotations }});
   }, [chart])
 
   useEffect(() => {

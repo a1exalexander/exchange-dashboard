@@ -1,6 +1,6 @@
 import logger from '../services/logger';
 
-const tempUrl = 'b16ec933.ngrok.io';
+const tempUrl = 'b6e3da2e.ngrok.io';
 
 const apiType = {
   prod: 'http://0.0.0.0:5000',

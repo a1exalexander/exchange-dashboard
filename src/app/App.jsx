@@ -9,6 +9,7 @@ import LevelsResistance from '../components/LevelsResistance';
 import LevelsSupport from '../components/LevelsSupport';
 import LevelsCustom from '../components/LevelsCustom';
 import Chart from '../components/Chart';
+import Loader from '../components/common/Loader';
 
 const App = ({ fetchData, wsConnect }) => {
 
@@ -19,6 +20,7 @@ const App = ({ fetchData, wsConnect }) => {
 
   return (
     <div className="app">
+      <Loader/>
       <div className="app__container">
         <h2 className="app__title">BitMEX XBUSD Dashboard</h2>
         <section className="app__section">

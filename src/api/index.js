@@ -3,12 +3,12 @@ import logger from '../services/logger';
 const tempUrl = '8355c78c.ngrok.io';
 
 const apiType = {
-  prod: 'http://0.0.0.0',
+  prod: 'http://0.0.0.0:5000',
   test: `http://${tempUrl}`,
 };
 
 const socketType = {
-  prod: 'ws://0.0.0.0/ws/ticks/',
+  prod: 'ws://0.0.0.0:5000/ws/ticks/',
   test: `ws://${tempUrl}/ws/ticks/`,
 };
 

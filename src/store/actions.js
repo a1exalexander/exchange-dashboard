@@ -24,7 +24,6 @@ import {
 } from '../constants';
 import HttpService from '../services/httpService';
 import { WESOCKET_ROOT } from '../api';
-import logger from '../services/logger';
 import levelParams from '../models/levelParams';
 
 const httpService = new HttpService();
@@ -187,7 +186,7 @@ export const toggleSupportLine = idx => async (dispatch, getState) => {
 
 export const customLevelAdd = level => async (dispatch, getState) => {
   dispatch(LEVELS_REQUEST);
-  const formData = { price_level: level.price, type: 'CUSTOM' };
+  const formData = { price_level: Number(level.price), type: 'CUSTOM' };
   const shallowCustom = [...getState().levelsModule.custom, level];
   const custom = shallowCustom.map((item, idx) => ({ ...item, idx }));
   try {
@@ -209,7 +208,7 @@ export const customLevelRemove = level => async (dispatch, getState) => {
   );
   try {
     await httpService.deleteLevel(formData);
-    dispatch([LEVELS_UPDATE, custom]);
+    dispatch([LEVELS_UPDATE, { custom }]);
     dispatch(LEVELS_SUCCESS);
   } catch (e) {
     dispatch(LEVELS_FAILURE);

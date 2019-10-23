@@ -23,7 +23,7 @@ export const mapAnnotationsLine = (type) => (item, idx) => {
     },
     drawTime: 'afterDraw',
     borderColor,
-    borderWidth: 1,
+    borderWidth: 0.5,
     mode: 'horizontal',
     type: 'line',
     value: item.price,

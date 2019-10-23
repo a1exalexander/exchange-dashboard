@@ -46,11 +46,11 @@ const Chart = ({ chart, annotations }) => {
 
   useEffect(() => {
     updateDataChart({ datasets: [ { ...dataChart.datasets[0], label: "Exhcange", data: [...chart] } ] });
-    updateOptions({ ...options, annotation: { annotations }});
+    // eslint-disable-next-line
   }, [chart])
 
   useEffect(() => {
-    updateOptions({ ...options, annotation: { annotations }});
+    updateOptions(prevState => ({ ...prevState, annotation: { annotations }}));
   }, [annotations])
 
   return (

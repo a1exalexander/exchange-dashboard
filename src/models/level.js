@@ -1,7 +1,8 @@
 const level = {
-  id: '',
+  idx: '',
   price: '',
   distance: '',
+  chartLine: true,
 }
 
 export default level;

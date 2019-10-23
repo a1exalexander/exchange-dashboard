@@ -11,6 +11,7 @@ const levelsModule = {
   chart: [],
   support: [],
   resistance: [],
+  custom: [],
 };
 
 const levelsReducer = (state = { levelsModule }, action) => {

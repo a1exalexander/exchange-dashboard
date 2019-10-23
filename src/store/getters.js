@@ -1,7 +1,20 @@
 import { Decimal } from 'decimal.js';
 
-export const getAnnotationLine = (type, value) => {
-  const borderColor = type === 'resistance' ? 'red' : 'blue';
+export const mapAnnotationsLine = (type) => (item, idx) => {
+  let borderColor = 'red';
+  switch (type) {
+    case 'resistance':
+      borderColor = 'red';
+      break;
+    case 'support':
+      borderColor = 'blue';
+      break;
+    case 'custom':
+      borderColor = 'green';
+      break;
+    default:
+      break;
+  }
   return {
     label: {
       enabled: false,
@@ -13,7 +26,7 @@ export const getAnnotationLine = (type, value) => {
     borderWidth: 1,
     mode: 'horizontal',
     type: 'line',
-    value,
+    value: item.price,
     scaleID: 'y-axis-0'
   };
 };
@@ -37,11 +50,12 @@ export const getDistanceLevels = store => levels => {
 export const getAnnotations = store => {
   const resistance = store.levelsModule.resistance
     .filter(({ chartLine }) => chartLine)
-    .map((level, idx) =>
-      getAnnotationLine('resistance', level.price)
-    );
+    .map(mapAnnotationsLine('resistatnce'));
   const support = store.levelsModule.support
     .filter(({ chartLine }) => chartLine)
-    .map((level, idx) => getAnnotationLine('support', level.price));
-  return [...resistance, ...support];
+    .map(mapAnnotationsLine('support'));
+  const custom = store.levelsModule.custom
+    .filter(({ chartLine }) => chartLine)
+    .map(mapAnnotationsLine('custom'));
+  return [...resistance, ...support, ...custom];
 };

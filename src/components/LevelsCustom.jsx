@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { customLevelAdd, customLevelRemove } from '../store/actions';
 import IconPlus from './icons/IconPlus';
 import models from '../models';
+import { formatNumber } from '../utils/format';
+import { getDistanceLevels } from '../store/getters';
 
 const LevelsCustom = ({ customLevelAdd, customLevelRemove, levels }) => {
   
@@ -24,16 +26,16 @@ const LevelsCustom = ({ customLevelAdd, customLevelRemove, levels }) => {
     }
   }
 
-  const levelsList = levels.map(({ id, price, distance }) => {
+  const levelsList = levels.map(({ idx, price, distance }) => {
     return (
-      <li className="levels__item" key={id}>
+      <li className="levels__item" key={idx}>
         <span className="levels__value levels__value--custom">
-          {price || 0} USD
+          {formatNumber(price)} USD
         </span>
         <span className="levels__value levels__value--custom">
           {distance || 0}%
         </span>
-        <button onClick={() => customLevelRemove(id)} className="levels__btn">
+        <button onClick={() => customLevelRemove({ idx, price })} className="levels__btn">
           <IconPlus className="levels__icon levels__icon--remove" />
         </button>
       </li>
@@ -71,6 +73,6 @@ const LevelsCustom = ({ customLevelAdd, customLevelRemove, levels }) => {
 };
 
 export default connect(
-  ({ customLevelsModule: { levels } }) => ({ levels }),
+  (store) => ({ levels: getDistanceLevels(store)(store.levelsModule.custom) }),
   { customLevelAdd, customLevelRemove }
 )(LevelsCustom);

@@ -70,6 +70,32 @@ class HttpService {
     } catch (e) {
       throw e;
     }
+  };
+  getLevels = async () => {
+    try {
+      const { data } = await axios.get(url.levels);
+      return data;
+    } catch (e) {
+      throw e;
+    }
+  };
+  addLevel = async (params) => {
+    try {
+      const res = await axios.put(url.levels, params);
+      if (res.status !== 200) throw res.data;
+      return;
+    } catch (e) {
+      throw e;
+    }
+  };
+  deleteLevel = async (params) => {
+    try {
+      const res = await axios.delete(url.levels, { data: params});
+      if (res.status !== 200) throw res.data;
+      return;
+    } catch (e) {
+      throw e;
+    }
   }
 }
 

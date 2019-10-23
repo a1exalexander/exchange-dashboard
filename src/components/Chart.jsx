@@ -29,12 +29,12 @@ const Chart = ({ chart, annotations }) => {
       zoom: {
         pan: {
           enabled: true,
-          mode: 'x',
+          mode: 'xy',
         },
         zoom: {
           enabled: false,
           drag: true,
-          mode: 'x',
+          mode: 'xy',
           speed: 0.1,
         }
       },

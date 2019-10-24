@@ -73,6 +73,6 @@ const LevelsCustom = ({ customLevelAdd, customLevelRemove, levels }) => {
 };
 
 export default connect(
-  (store) => ({ levels: getDistanceLevels(store)(store.levelsModule.custom) }),
+  (store) => ({ levels: getDistanceLevels(store, store.levelsModule.custom) }),
   { customLevelAdd, customLevelRemove }
 )(LevelsCustom);

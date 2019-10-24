@@ -68,7 +68,7 @@ export default connect(
   store => {
     return {
       thresholds: store.thresholdsModule,
-      levels: getDistanceLevels(store)(store.levelsModule.resistance)
+      levels: getDistanceLevels(store, store.levelsModule.resistance, 'asc')
     };
   },
   { toggleResistanceLine, thresholdsUpdateAlert, thresholdsUpdateAlertRequest }

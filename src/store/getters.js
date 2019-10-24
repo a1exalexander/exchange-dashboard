@@ -31,7 +31,7 @@ export const mapAnnotationsLine = (type) => (item, idx) => {
   };
 };
 
-export const getDistanceLevels = store => levels => {
+export const getDistanceLevels = (store, levels, sortType) => {
   const { price = 0 } = store.statModule.stat;
   const result = levels.map((level, idx) => {
     return {
@@ -44,7 +44,14 @@ export const getDistanceLevels = store => levels => {
         : 0
     };
   });
-  return result.sort(({ price: a }, { price: b }) => b - a);
+  switch (sortType) {
+    case 'asc':
+      return result.sort(({ price: a }, { price: b }) => a - b);
+    case 'desc':
+      return result.sort(({ price: a }, { price: b }) => b - a);
+    default:
+      return result;
+  }
 };
 
 export const getAnnotations = store => {

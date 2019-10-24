@@ -68,7 +68,7 @@ export default connect(
   store => {
     return {
       thresholds: store.thresholdsModule,
-      levels: getDistanceLevels(store)(store.levelsModule.support)
+      levels: getDistanceLevels(store, store.levelsModule.support, 'desc')
     };
   },
   { thresholdsUpdateAlert, thresholdsUpdateAlertRequest, toggleSupportLine }

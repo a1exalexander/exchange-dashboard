@@ -25,6 +25,8 @@ const Chart = ({ chart, annotations }) => {
       xAxes: [
         {
           display: true,
+          stacked: true,
+          beginAtZero: true,
           type: "time",
           time: {
             unit: "day",
@@ -34,7 +36,7 @@ const Chart = ({ chart, annotations }) => {
           },
           ticks: {
             autoSkip: true,
-            maxTicksLimit: 5
+            maxTicksLimit: 4.1,
           }
         }
       ]
@@ -68,7 +70,7 @@ const Chart = ({ chart, annotations }) => {
   }, [annotations])
 
   return (
-    <ChartComponent type='ohlc' data={dataChart} options={options} />
+    <ChartComponent width={102} height={50} type='ohlc' data={dataChart} options={options} />
   );
 };
 

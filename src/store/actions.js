@@ -136,7 +136,8 @@ export const fetchLevels = (params = {}) => async dispatch => {
         o: x.Open,
         h: x.High,
         l: x.Low,
-        c: x.Close
+        c: x.Close,
+        x: x.Timestamp,
       };
     });
     const mapLevel = (price, idx) => ({

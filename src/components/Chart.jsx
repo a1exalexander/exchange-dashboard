@@ -19,9 +19,23 @@ const Chart = ({ chart, annotations }) => {
       display: false
     },
     scales: {
+      yAxes: [{
+        type: 'financialLinear'
+      }],
       xAxes: [
         {
-          display: false
+          display: true,
+          type: "time",
+          time: {
+            unit: "day",
+            displayFormats: {
+              day: "DD/MM/YYYY"
+            }
+          },
+          ticks: {
+            autoSkip: true,
+            maxTicksLimit: 5
+          }
         }
       ]
     },

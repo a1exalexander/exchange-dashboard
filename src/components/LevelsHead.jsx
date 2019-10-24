@@ -3,7 +3,7 @@ import models from '../models';
 import { connect } from 'react-redux';
 import { fetchLevels } from '../store/actions';
 
-const LevelsHead = ({ fetchLevels }) => {
+const LevelsHead = ({ fetchLevels, timeframes }) => {
 
   const [level, updateLevel] = useState(models.levelParams);
 
@@ -27,18 +27,9 @@ const LevelsHead = ({ fetchLevels }) => {
            <div className="levels__select-wrapper">
               <input value={level.timeframe} readOnly placeholder="timeframe" className="levels__input levels__input--like-select"/>
               <select id='timeframe' onChange={handleChange('timeframe')} placeholder="timeframe" className="levels__select" value={level.timeframe}>
-                <option value="1m">1m</option>
-                <option value="5m">5m</option>
-                <option value="15m">15m</option>
-                <option value="30m">30m</option>
-                <option value="1h">1h</option>
-                <option value="3h">3h</option>
-                <option value="6h">6h</option>
-                <option value="12h">12h</option>
-                <option value="1d">1d</option>
-                <option value="1w">1w</option>
-                <option value="2w">2w</option>
-                <option value="1m">1m</option>
+                { timeframes.split(',').map((el, idx) => {
+                  return <option key={idx} value={el}>{el}</option>
+                }) }
               </select>
            </div>
          </div>
@@ -68,6 +59,6 @@ const LevelsHead = ({ fetchLevels }) => {
 };
 
 export default connect(
-  null,
+  ({ statModule: { stat } }) => ({ timeframes: stat.TIMEFRAMES }),
   { fetchLevels }
 )(LevelsHead);

@@ -44,7 +44,7 @@ export const getDistanceLevels = store => levels => {
         : 0
     };
   });
-  return result;
+  return result.sort(({ price: a }, { price: b }) => b - a);
 };
 
 export const getAnnotations = store => {

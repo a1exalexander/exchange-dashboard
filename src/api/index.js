@@ -1,14 +1,14 @@
 import logger from '../services/logger';
 
-const tempUrl = '8355c78c.ngrok.io';
+const tempUrl = '9e4651a1.ngrok.io';
 
 const apiType = {
-  prod: 'http://0.0.0.0',
+  prod: 'http://0.0.0.0:5000',
   test: `http://${tempUrl}`,
 };
 
 const socketType = {
-  prod: 'ws://0.0.0.0/ws/ticks/',
+  prod: 'ws://0.0.0.0:5000/ws/ticks/',
   test: `ws://${tempUrl}/ws/ticks/`,
 };
 
@@ -22,7 +22,7 @@ logger.info(ROOT_URL, 'API URL');
 logger.info(WESOCKET_ROOT, 'WEBSOCKET URL');
 
 const url = {
-  parameters: `${ROOT_URL}/bitmex/parameters`,
+  parameters: `${ROOT_URL}/bitmex/parameters/`,
   thresholds: `${ROOT_URL}/bitmex/thresholds`,
   funding: `${ROOT_URL}/bitmex/funding`,
   levels: `${ROOT_URL}/bitmex/levels/`,

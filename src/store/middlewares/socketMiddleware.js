@@ -94,7 +94,10 @@ const socketMiddleware = () => {
           case has(payload, 'predicted_funding_rate'):
               store.dispatch([
                 STAT_UPDATE,
-                { predicted_funding_rate: payload['predicted_funding_rate'] }
+                {
+                  next_funding_rate_change: payload['next_funding_rate_change'],
+                  predicted_funding_rate: payload['predicted_funding_rate']
+                }
               ]);
               break;
           case has(payload, 'current_funding_rate'):

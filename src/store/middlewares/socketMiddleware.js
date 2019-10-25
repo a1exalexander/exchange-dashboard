@@ -8,6 +8,7 @@ import {
 } from '../../constants';
 import logger from '../../services/logger';
 import { WESOCKET_ROOT } from '../../api';
+import has from '../../utils/has';
 
 const socketMiddleware = () => {
   let socket = null;
@@ -83,10 +84,31 @@ const socketMiddleware = () => {
         ]);
         break;
       case 'instrument':
-        store.dispatch([
-          STAT_UPDATE,
-          { open_inerest: payload['open_interest'] }
-        ]);
+        switch (true) {
+          case has(payload, 'open_interest'):
+            store.dispatch([
+              STAT_UPDATE,
+              { open_inerest: payload['open_interest'] }
+            ]);
+            break;
+          case has(payload, 'predicted_funding_rate'):
+              store.dispatch([
+                STAT_UPDATE,
+                { predicted_funding_rate: payload['predicted_funding_rate'] }
+              ]);
+              break;
+          case has(payload, 'current_funding_rate'):
+            store.dispatch([
+              STAT_UPDATE,
+              {
+                current_funding_rate: payload['current_funding_rate'],
+                next_funding_rate_change: payload['next_funding_rate_change']
+              }
+            ]);
+            break;
+          default:
+              break;
+        }
         break;
       default:
         break;

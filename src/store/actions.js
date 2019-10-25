@@ -249,7 +249,6 @@ export const thresholdsUpdateAlertRequest = (type, period) => async (
 
 export const fetchData = () => dispatch => {
   fetchParameters()(dispatch);
-  fetchFunding()(dispatch);
   fetchThresholds()(dispatch);
   fetchLevels()(dispatch);
 };

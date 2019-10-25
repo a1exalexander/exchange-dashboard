@@ -1,6 +1,5 @@
 import * as Logger from 'logplease';
-
-const has = Object.prototype.hasOwnProperty;
+import has from '../utils/has';
 
 const ENV_MODE = process.env.NODE_ENV === 'development';
 
@@ -14,16 +13,16 @@ const getErrorMessage = (error = 'Somthing Wrong') => {
   let msg = error;
   if (error instanceof Object) {
     switch (true) {
-      case has.call(error, 'message'):
+      case has(error, 'message'):
         msg = error.message;
         break;
-      case has.call(error, 'msg'):
+      case has(error, 'msg'):
         msg = error.msg;
         break;
-      case has.call(error, 'data'):
+      case has(error, 'data'):
         msg = error.data;
         break;
-      case has.call(error, 'response'):
+      case has(error, 'response'):
         msg = error.response.statusText;
         break;
       default:

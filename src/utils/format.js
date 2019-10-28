@@ -6,4 +6,5 @@ export const formatNumber = (value) => {
 
 export const formatVolume = (value, percent) => {
   return `${formatNumber(value)} USD (${numeral(percent).format('0.00')}%)`
+  // return `${formatNumber(value)} USD (${percent}%----)`
 }

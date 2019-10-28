@@ -33,7 +33,7 @@ class HttpService {
   };
   fetchParametersUpdate = async (payload) => {
     try {
-      await axios.put(`${url.parameters}/${payload.id}/`, payload);
+      await axios.put(`${url.parameters}${payload.id}/`, payload);
       return;
     } catch (e) {
       return;

@@ -70,7 +70,7 @@ const Chart = ({ chart, annotations }) => {
   }, [annotations])
 
   return (
-    <ChartComponent width={102} height={50} type='ohlc' data={dataChart} options={options} />
+    <ChartComponent width={102} height={50} type='candlestick' data={dataChart} options={options} />
   );
 };
 

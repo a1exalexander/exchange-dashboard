@@ -22,7 +22,7 @@ const App = ({ fetchData, wsConnect }) => {
     <div className="app">
       <Loader/>
       <div className="app__container">
-        <h2 className="app__title">BitMEX XBUSD Dashboard</h2>
+        <h2 className="app__title">BitMEX XBTUSD Dashboard</h2>
         <section className="app__section">
           <SectionHead />
           <SectionFunding />
@@ -30,13 +30,13 @@ const App = ({ fetchData, wsConnect }) => {
         </section>
         <h2 className="app__title">S/R Levels</h2>
         <div className="app__section">
+          <Chart />
+        </div>
+        <div className="app__section">
           <LevelsHead />
           <LevelsResistance />
           <LevelsSupport />
           <LevelsCustom />
-        </div>
-        <div className="app__section">
-          <Chart />
         </div>
       </div>
     </div>

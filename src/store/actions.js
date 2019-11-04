@@ -20,7 +20,8 @@ import {
   LEVELS_REQUEST,
   LEVELS_UPDATE,
   LEVELS_SUCCESS,
-  LEVELS_FAILURE
+  LEVELS_FAILURE,
+  TIMEFRAME_UPDATE
 } from '../constants';
 import HttpService from '../services/httpService';
 import { WESOCKET_ROOT } from '../api';
@@ -200,6 +201,10 @@ export const customLevelAdd = level => async (dispatch, getState) => {
     return 0;
   }
 };
+
+export const updateTimeframe = (timeframe) => (dispatch) => {
+  dispatch([TIMEFRAME_UPDATE, timeframe]);
+}
 
 export const customLevelRemove = level => async (dispatch, getState) => {
   dispatch(LEVELS_REQUEST);

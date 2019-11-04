@@ -5,19 +5,19 @@ import { formatNumber } from '../utils/format';
 
 const SectionHead = ({ stat, fetchParametersUpdate, parametersUpdate }) => {
 
-  const handleChange = e => {
+  const handleChange = (type) => (e) => {
     const { value } = e.target;
-    parametersUpdate(value, 'VOLUME_NUMBER_OF_TRADES');
+    parametersUpdate(value, type);
   };
 
-  const updateValue = (e) => {
+  const updateValue = (type) => (e) => {
     if (e) e.preventDefault()
-    fetchParametersUpdate('VOLUME_NUMBER_OF_TRADES');
+    fetchParametersUpdate(type);
   };
 
-  const handleEnter = (e) => {
+  const handleEnter = (id) => (e) => {
     if (e.key === 'Enter') {
-      document.getElementById('volume_last').blur();
+      document.getElementById(id).blur();
     }
   }
 
@@ -32,12 +32,12 @@ const SectionHead = ({ stat, fetchParametersUpdate, parametersUpdate }) => {
           <div className="section__wrapper">
             <span className="section__value">Volume of last</span>
             <input
-              id='volume_last'
+              id='VOLUME_NUMBER_OF_TRADES'
               type="number"
               value={stat.VOLUME_NUMBER_OF_TRADES}
-              onChange={handleChange}
-              onKeyUp={handleEnter}
-              onBlur={updateValue}
+              onChange={handleChange('VOLUME_NUMBER_OF_TRADES')}
+              onKeyUp={handleEnter('VOLUME_NUMBER_OF_TRADES')}
+              onBlur={updateValue('VOLUME_NUMBER_OF_TRADES')}
               className="section__input section__input--trades"
             />
             <span className="section__value">trades</span>
@@ -45,7 +45,18 @@ const SectionHead = ({ stat, fetchParametersUpdate, parametersUpdate }) => {
           <span className="section__value">{formatNumber(stat.volume_of_last)} USD</span>
         </li>
         <li className="section__item">
-          <span className="section__value">Open Interest</span>
+          <div className="section__wrapper">
+            <span className="section__value">Open Interest</span>
+            <input
+              id='OPEN_INTEREST'
+              type="number"
+              value={stat.OPEN_INTEREST}
+              onChange={handleChange('OPEN_INTEREST')}
+              onKeyUp={handleEnter('OPEN_INTEREST')}
+              onBlur={updateValue('OPEN_INTEREST')}
+              className="section__input section__input--trades"
+            />
+          </div>
           <span className="section__value">{formatNumber(stat.open_inerest)} USD</span>
         </li>
       </ul>

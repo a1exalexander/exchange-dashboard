@@ -2,6 +2,7 @@ const stat = {
   price: 0,
   volume_of_last: 0,
   VOLUME_NUMBER_OF_TRADES: '',
+  OPEN_INTEREST: '',
   TIMEFRAMES: '',
   open_inerest: 0,
   current_funding_rate: '0',

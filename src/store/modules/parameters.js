@@ -2,13 +2,15 @@ import {
   PARAMETERS_REQUEST,
   PARAMETERS_SUCCESS,
   PARAMETERS_FAILURE,
-  PARAMETERS_UPDATE
+  PARAMETERS_UPDATE,
+  TIMEFRAME_UPDATE
 } from '../../constants';
 
 const parametersModule = {
   loading: false,
   hasError: false,
   parameters: [],
+  timeframe: 'D',
 };
 
 const parametersReducer = (state = { parametersModule }, action) => {
@@ -36,6 +38,11 @@ const parametersReducer = (state = { parametersModule }, action) => {
       return {
         ...state.parametersModule,
         parameters: [...action.payload],
+      };
+    case TIMEFRAME_UPDATE:
+      return {
+        ...state.parametersModule,
+        timeframe: [...action.payload],
       };
     default:
       return state.parametersModule;

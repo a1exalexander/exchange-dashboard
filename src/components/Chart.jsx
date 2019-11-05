@@ -33,7 +33,7 @@ const Chart = ({ timeframe, annotations }) => {
   }, [options]);
 
   return (
-    <div class="tradingview-widget-container">
+    <div className="tradingview-widget-container">
       <div id="tradingview_5abd4"></div>
     </div>
     

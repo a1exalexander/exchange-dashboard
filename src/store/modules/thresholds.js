@@ -15,6 +15,7 @@ const thresholdsModule = {
   volume_1h: '',
   volume_1d: '',
   resistance: '',
+  OPEN_INTEREST: '',
   support: '',
 };
 

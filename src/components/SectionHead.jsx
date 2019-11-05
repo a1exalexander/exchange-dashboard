@@ -1,18 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchParametersUpdate, parametersUpdate } from '../store/actions';
+import { fetchParametersUpdate, parametersUpdate, thresholdsUpdateAlertRequest, thresholdsUpdateAlert } from '../store/actions';
 import { formatNumber } from '../utils/format';
 
-const SectionHead = ({ stat, fetchParametersUpdate, parametersUpdate }) => {
+const SectionHead = ({ thresholds, stat, thresholdsUpdateAlertRequest, thresholdsUpdateAlert, fetchParametersUpdate, parametersUpdate }) => {
 
   const handleChange = (type) => (e) => {
     const { value } = e.target;
-    parametersUpdate(value, type);
+    if (type === 'VOLUME_NUMBER_OF_TRADES') parametersUpdate(value, type);
+    else thresholdsUpdateAlert({ type, value });
   };
 
   const updateValue = (type) => (e) => {
     if (e) e.preventDefault()
-    fetchParametersUpdate(type);
+    if (type === 'VOLUME_NUMBER_OF_TRADES') fetchParametersUpdate(type);
+    else thresholdsUpdateAlertRequest(type);
   };
 
   const handleEnter = (id) => (e) => {
@@ -50,7 +52,7 @@ const SectionHead = ({ stat, fetchParametersUpdate, parametersUpdate }) => {
             <input
               id='OPEN_INTEREST'
               type="number"
-              value={stat.OPEN_INTEREST}
+              value={thresholds.OPEN_INTEREST}
               onChange={handleChange('OPEN_INTEREST')}
               onKeyUp={handleEnter('OPEN_INTEREST')}
               onBlur={updateValue('OPEN_INTEREST')}
@@ -64,4 +66,4 @@ const SectionHead = ({ stat, fetchParametersUpdate, parametersUpdate }) => {
   );
 };
 
-export default connect(({ statModule: { stat } }) => ({ stat }), { parametersUpdate, fetchParametersUpdate })(SectionHead);
+export default connect(({ thresholdsModule: thresholds, statModule: { stat } }) => ({ stat, thresholds }), { parametersUpdate, fetchParametersUpdate, thresholdsUpdateAlert, thresholdsUpdateAlertRequest })(SectionHead);

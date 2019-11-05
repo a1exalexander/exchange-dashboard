@@ -27,7 +27,7 @@
   &__input {
     @extend %input;
     &--trades {
-      max-width: 40px;
+      width: 60px;
       margin: 0 6px;
     }
     &--level {

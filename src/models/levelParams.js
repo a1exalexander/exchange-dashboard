@@ -1,5 +1,5 @@
 const levelParams = {
-  timeframe: 'D',
+  timeframe: '6h',
   candles: 200,
   minTouches: 3,
   likelinessPercent: 1.5,

@@ -106,6 +106,9 @@ export const fetchThresholds = () => async dispatch => {
           case 'RESISTANCE':
             dispatch([THRESHOLDS_UPDATE_ALERT, { resistance: value }]);
             break;
+          case 'OPEN_INTEREST':
+            dispatch([THRESHOLDS_UPDATE_ALERT, { OPEN_INTEREST: value }]);
+            break;
           case 'SUPPORT':
             dispatch([THRESHOLDS_UPDATE_ALERT, { support: value }]);
             break;
@@ -229,7 +232,7 @@ export const thresholdsUpdateAlert = (item, type) => async dispatch => {
   }
 };
 
-export const thresholdsUpdateAlertRequest = (type, period) => async (
+export const thresholdsUpdateAlertRequest = (type, period = '') => async (
   dispatch,
   getState
 ) => {
